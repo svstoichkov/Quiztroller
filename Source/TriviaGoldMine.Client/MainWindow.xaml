@@ -49,29 +49,20 @@
             </materialDesign:ColorZone>
             <views:Mp3Player Grid.Row="1"
                              Grid.Column="0"
+                             VerticalAlignment="Stretch"
                              DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Mp3PlayerViewModel}"
                              Margin="10" />
             <views:PowerPointController Grid.Row="1"
-                             Grid.Column="1"
-                             DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PowerPointControllerViewModel}"
+                                        Grid.Column="1"
+                                        VerticalAlignment="Stretch"
+                                        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PowerPointControllerViewModel}"
+                                        Margin="10" />
+            <views:Questions Grid.Row="2"
+                             VerticalAlignment="Stretch"
+                             Grid.Column="0"
+                             Grid.ColumnSpan="2"
+                             DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=QuestionsViewModel}"
                              Margin="10" />
-            <materialDesign:Card Grid.Row="2"
-                                 Grid.Column="0"
-                                 Grid.ColumnSpan="2"
-                                 Margin="10,0,10,10"
-                                 AllowDrop="True">
-                <StackPanel Orientation="Vertical">
-                    <materialDesign:ColorZone Mode="PrimaryDark"
-                                              Padding="8">
-                        <TextBlock Text="Questions"
-                                   TextWrapping="WrapWithOverflow"
-                                   HorizontalAlignment="Center" />
-                    </materialDesign:ColorZone>
-                    <Grid Margin="20">
-                        <DocumentViewer x:Name="documentViewer"/>
-                    </Grid>
-                </StackPanel>
-            </materialDesign:Card>
         </Grid>
     </materialDesign:DialogHost>
 </Window>

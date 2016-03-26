@@ -15,6 +15,7 @@
         private string currentSong;
         private readonly MediaPlayer mediaPlayer = new MediaPlayer();
         private bool isPlaying;
+        private bool popUpEnabled;
 
         public Mp3PlayerViewModel()
         {
@@ -33,6 +34,18 @@
         public ICommand Next { get; set; }
 
         public ObservableCollection<string> Songs { get; set; } = new ObservableCollection<string>();
+
+        public bool PopUpEnabled
+        {
+            get
+            {
+                return this.popUpEnabled;
+            }
+            set
+            {
+                this.Set(() => this.PopUpEnabled, ref this.popUpEnabled, value);
+            }
+        }
 
         public string CurrentSong
         {
@@ -59,6 +72,7 @@
             {
                 this.Songs.Add(filename);
             }
+            this.PopUpEnabled = true;
             this.CurrentSong = this.Songs.First();
         }
 
@@ -79,7 +93,7 @@
             }
 
             this.CurrentSong = this.Songs[this.currentSongIndex];
-            
+
         }
 
         private void HandlePrevious()
