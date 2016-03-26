@@ -7,14 +7,12 @@
                      Drop="Mp3Player_OnDrop"
                      DragOver="Mp3Player_OnDragOver">
     <StackPanel Orientation="Vertical">
-        <materialDesign:ColorZone Mode="PrimaryDark"
+        <materialDesign:ColorZone Mode="Accent"
                                   Padding="8">
-            <TextBlock Text="MP3 Player"
-                       TextWrapping="WrapWithOverflow"
-                       HorizontalAlignment="Center" />
+            <TextBlock Text="{Binding CurrentSong, Converter={StaticResource PathToFileNameConverter}}" HorizontalAlignment="Center"/>
         </materialDesign:ColorZone>
         <StackPanel Orientation="Horizontal"
-                    Margin="20">
+                    Margin="10">
             <materialDesign:PopupBox IsEnabled="{Binding PopUpEnabled}">
                 <materialDesign:PopupBox.ToggleContent>
                     <materialDesign:PackIcon Kind="PlaylistPlay" Width="30" Height="30"/>
@@ -52,7 +50,6 @@
                                          Width="24"
                                          Height="24" />
             </Button>
-            <TextBlock Text="{Binding CurrentSong, Converter={StaticResource PathToFileNameConverter}}" />
         </StackPanel>
     </StackPanel>
 </materialDesign:Card>

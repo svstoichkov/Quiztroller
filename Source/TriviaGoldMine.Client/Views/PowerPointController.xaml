@@ -7,14 +7,13 @@
                      Drop="PowerPoint_OnDrop"
                      DragOver="PowerPoint_OnDragOver">
     <StackPanel Orientation="Vertical">
-        <materialDesign:ColorZone Mode="PrimaryDark"
+        <materialDesign:ColorZone Mode="Accent"
                                   Padding="8">
             <TextBlock Text="PowerPoint Controller"
-                       TextWrapping="WrapWithOverflow"
                        HorizontalAlignment="Center" />
         </materialDesign:ColorZone>
         <StackPanel Orientation="Horizontal"
-                    Margin="20">
+                    Margin="10">
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding Previous}">
                 <materialDesign:PackIcon Kind="SkipPrevious"

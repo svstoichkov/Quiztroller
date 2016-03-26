@@ -12,7 +12,7 @@
     public class Mp3PlayerViewModel : ViewModelBase
     {
         private int currentSongIndex;
-        private string currentSong;
+        private string currentSong = "MP3 Player";
         private readonly MediaPlayer mediaPlayer = new MediaPlayer();
         private bool isPlaying;
         private bool popUpEnabled;

@@ -38,25 +38,31 @@
                                       IsTabStop="False"
                                       materialDesign:ShadowAssist.ShadowDepth="Depth3">
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
                     <Image Source="trivia Goldmine.png"
-                           Width="150"
-                           HorizontalAlignment="Left" />
+                           HorizontalAlignment="Left"
+                           Height="{Binding ElementName=mp3, Path=ActualHeight}"
+                           Grid.Column="0" />
+                    <views:Mp3Player Grid.Column="1"
+                                     x:Name="mp3"
+                                     Margin="10,0,0,0"
+                                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Mp3PlayerViewModel}" />
+                    <views:PowerPointController Grid.Column="2"
+                                                Margin="10,0,0,0"
+                                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PowerPointControllerViewModel}" />
                     <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
                             Content="Scoreboard"
-                            HorizontalAlignment="Right"
-                            Margin="0,0,50,0" />
+                            MinWidth="100"
+                            HorizontalAlignment="Center"
+                            Margin="20,0,50,0"
+                            Grid.Column="3" />
                 </Grid>
             </materialDesign:ColorZone>
-            <views:Mp3Player Grid.Row="1"
-                             Grid.Column="0"
-                             VerticalAlignment="Stretch"
-                             DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Mp3PlayerViewModel}"
-                             Margin="10" />
-            <views:PowerPointController Grid.Row="1"
-                                        Grid.Column="1"
-                                        VerticalAlignment="Stretch"
-                                        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PowerPointControllerViewModel}"
-                                        Margin="10" />
             <views:Questions Grid.Row="2"
                              VerticalAlignment="Stretch"
                              Grid.Column="0"
