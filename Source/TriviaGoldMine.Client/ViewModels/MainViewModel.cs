@@ -1,10 +1,13 @@
 namespace TriviaGoldMine.Client.ViewModels
 {
-    using System.Runtime.CompilerServices;
     using System.Windows.Input;
 
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
+
+    using MaterialDesignThemes.Wpf;
+
+    using Properties;
 
     using Views;
 
@@ -13,11 +16,18 @@ namespace TriviaGoldMine.Client.ViewModels
         private string switcherContent = "Scoreboard";
         private readonly object questions = new Questions();
         private readonly object scoreboard = new Scoreboard();
+        private readonly object howToUse = new HowToUse();
         private object currentContent;
 
         public MainViewModel()
         {
             this.currentContent = questions;
+            this.switcherContent = "Scoreboard";
+            if (Settings.Default.HowToUse)
+            {
+                this.currentContent = this.howToUse;
+                this.switcherContent = "Questions";
+            }
             this.Switch = new RelayCommand(this.HandleSwitch);
         }
 

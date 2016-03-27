@@ -1,0 +1,41 @@
+﻿<materialDesign:Card x:Class="TriviaGoldMine.Client.Views.HowToUse"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                     VerticalAlignment="Stretch"
+                     VerticalContentAlignment="Stretch">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone Mode="Accent"
+                                  Padding="8"
+                                  Grid.Row="0">
+            <Grid>
+            <TextBlock Text="How to Use"
+                       TextWrapping="WrapWithOverflow"
+                       HorizontalAlignment="Center" />
+                <CheckBox Checked="ToggleButton_OnChecked"
+                          Unchecked="ToggleButton_OnUnchecked"
+                          HorizontalAlignment="Right"
+                          Margin="0,0,20,0"
+                          VerticalAlignment="Center"
+                          VerticalContentAlignment="Center">Do not show again</CheckBox>
+            </Grid>
+        </materialDesign:ColorZone>
+        <StackPanel Margin="20"
+              Grid.Row="1">
+            <TextBlock>1. Click on the button in the upper right corner saying "Questions".</TextBlock>
+            <Separator Margin="0,20,0,20" />
+            <TextBlock>2. Drag and drop an excel file in the "Questions" section.</TextBlock>
+            <Separator Margin="0,20,0,20" />
+            <TextBlock>3. Drag and drop one or more .mp3 files in the "Music Player" section.</TextBlock>
+            <Separator Margin="0,20,0,20" />
+            <TextBlock>4. Start the PowerPoint presentation.</TextBlock>
+            <Separator Margin="0,20,0,20" />
+            <TextBlock>5. Use the button with magnifying glass icon in "Second Screen Controller" section to find a running instance of PowerPoint.</TextBlock>
+            <Separator Margin="0,20,0,20" />
+        </StackPanel>
+    </Grid>
+</materialDesign:Card>

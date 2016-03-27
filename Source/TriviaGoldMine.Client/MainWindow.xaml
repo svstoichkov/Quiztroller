@@ -53,6 +53,7 @@
                            Grid.Column="0" />
                     <views:Mp3Player Grid.Column="1"
                                      x:Name="mp3"
+                                     Focusable="False"
                                      Margin="10,0,0,0"/>
                     <views:PowerPointController Grid.Column="2"
                                                 Margin="10,0,0,0"/>
@@ -60,6 +61,7 @@
                             Content="{Binding SwitcherContent}"
                             Command="{Binding Switch}"
                             MinWidth="150"
+                            Focusable="False"
                             HorizontalAlignment="Center"
                             Margin="20,0,50,0"
                             Grid.Column="3" />

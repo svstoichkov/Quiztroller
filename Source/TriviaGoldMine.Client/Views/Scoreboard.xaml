@@ -28,8 +28,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <DataGrid ItemsSource="{Binding Teams}"
+                      x:Name="dataGrid"
                       AutoGenerateColumns="False"
                       Grid.Row="1"
+                      CanUserReorderColumns="False"
                       CanUserAddRows="False"
                       CanUserDeleteRows="False"
                       HorizontalScrollBarVisibility="Auto">
