@@ -27,7 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://dl.dropboxusercontent.com/u/57583125/Installers/UpWork/TriviaGoldmine/</InstallUrl>
     <UpdateUrl>https://dl.dropboxusercontent.com/u/57583125/Installers/UpWork/TriviaGoldmine/</UpdateUrl>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -124,14 +124,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Converters\PathArrayToFileNameConverter.cs" />
     <Compile Include="Converters\PathToFileNameConverter.cs" />
+    <Compile Include="Converters\PointsToScoreConverter.cs" />
     <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\Team.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\Mp3PlayerViewModel.cs" />
     <Compile Include="ViewModels\PowerPointControllerViewModel.cs" />
     <Compile Include="ViewModels\QuestionsViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="ViewModels\ScoreboardViewModel.cs" />
     <Compile Include="Views\Mp3Player.xaml.cs">
       <DependentUpon>Mp3Player.xaml</DependentUpon>
     </Compile>
@@ -140,6 +141,9 @@
     </Compile>
     <Compile Include="Views\Questions.xaml.cs">
       <DependentUpon>Questions.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Scoreboard.xaml.cs">
+      <DependentUpon>Scoreboard.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -162,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Questions.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Scoreboard.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -194,9 +202,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="trivia Goldmine.png" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="VBIDE">

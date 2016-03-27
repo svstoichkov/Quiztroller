@@ -1,0 +1,73 @@
+﻿<materialDesign:Card x:Class="TriviaGoldMine.Client.Views.Scoreboard"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+                     xmlns:viewModels="clr-namespace:TriviaGoldMine.Client.ViewModels">
+    <materialDesign:Card.DataContext>
+        <viewModels:ScoreboardViewModel />
+    </materialDesign:Card.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <materialDesign:ColorZone Mode="Accent"
+                                  Grid.Row="0"
+                                  Padding="8">
+            <TextBlock Text="Scoreboard"
+                       HorizontalAlignment="Center" />
+        </materialDesign:ColorZone>
+        <Grid Margin="10"
+              Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <DataGrid ItemsSource="{Binding Teams}"
+                      AutoGenerateColumns="False"
+                      Grid.Row="1"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Score"
+                                        IsReadOnly="True"
+                                        Width="Auto"
+                                        Binding="{Binding Score}" />
+                    <DataGridTextColumn Header="Name"
+                                        Width="Auto"
+                                        Binding="{Binding Name}" />
+                    <DataGridTextColumn Header="1"
+                                        Width="Auto"
+                                        Binding="{Binding Points1}" />
+                    <DataGridTextColumn Header="2"
+                                        Width="Auto"
+                                        Binding="{Binding Points2}" />
+                    <DataGridTextColumn Header="3"
+                                        Width="Auto"
+                                        Binding="{Binding Points3}" />
+                    <DataGridTextColumn Header="4"
+                                        Width="Auto"
+                                        Binding="{Binding Points4}" />
+                    <DataGridTextColumn Header="5"
+                                        Width="Auto"
+                                        Binding="{Binding Points5}" />
+                    <DataGridTextColumn Header="6"
+                                        Width="Auto"
+                                        Binding="{Binding Points6}" />
+                    <DataGridTextColumn Header="7"
+                                        Width="Auto"
+                                        Binding="{Binding Points7}" />
+                    <DataGridTextColumn Header="8"
+                                        Width="Auto"
+                                        Binding="{Binding Points8}" />
+                    <DataGridTextColumn Header="9"
+                                        Width="Auto"
+                                        Binding="{Binding Points9}" />
+                    <DataGridTextColumn Header="10"
+                                        Width="Auto"
+                                        Binding="{Binding Points10}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</materialDesign:Card>

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:views="clr-namespace:TriviaGoldMine.Client.Views"
+        xmlns:viewModels="clr-namespace:TriviaGoldMine.Client.ViewModels"
         mc:Ignorable="d"
         Title="Trivia Goldmine"
         WindowState="Maximized"
@@ -14,8 +15,10 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="26"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}">
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+    <Window.DataContext>
+        <viewModels:MainViewModel />
+    </Window.DataContext>
     <materialDesign:DialogHost x:Name="dialogHost"
                                Identifier="RootDialog"
                                IsTabStop="False">
@@ -50,25 +53,23 @@
                            Grid.Column="0" />
                     <views:Mp3Player Grid.Column="1"
                                      x:Name="mp3"
-                                     Margin="10,0,0,0"
-                                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Mp3PlayerViewModel}" />
+                                     Margin="10,0,0,0"/>
                     <views:PowerPointController Grid.Column="2"
-                                                Margin="10,0,0,0"
-                                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PowerPointControllerViewModel}" />
+                                                Margin="10,0,0,0"/>
                     <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                            Content="Scoreboard"
-                            MinWidth="100"
+                            Content="{Binding SwitcherContent}"
+                            Command="{Binding Switch}"
+                            MinWidth="150"
                             HorizontalAlignment="Center"
                             Margin="20,0,50,0"
                             Grid.Column="3" />
                 </Grid>
             </materialDesign:ColorZone>
-            <views:Questions Grid.Row="2"
-                             VerticalAlignment="Stretch"
-                             Grid.Column="0"
-                             Grid.ColumnSpan="2"
-                             DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=QuestionsViewModel}"
-                             Margin="10" />
+            <ContentControl Content="{Binding CurrentContent}"
+                            Grid.Row="2"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            Margin="20" />
         </Grid>
     </materialDesign:DialogHost>
 </Window>
