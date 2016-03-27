@@ -10,7 +10,7 @@
     {
         public ScoreboardViewModel()
         {
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 25; i++)
             {
                 this.Teams.Add(new Team());
             }

@@ -27,7 +27,7 @@
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://dl.dropboxusercontent.com/u/57583125/Installers/UpWork/TriviaGoldmine/</InstallUrl>
     <UpdateUrl>https://dl.dropboxusercontent.com/u/57583125/Installers/UpWork/TriviaGoldmine/</UpdateUrl>
-    <ApplicationRevision>4</ApplicationRevision>
+    <ApplicationRevision>5</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -125,7 +125,6 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\PathToFileNameConverter.cs" />
-    <Compile Include="Converters\PointsToScoreConverter.cs" />
     <Compile Include="Models\Question.cs" />
     <Compile Include="Models\Team.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
