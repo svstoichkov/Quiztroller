@@ -28,18 +28,16 @@
                           Grid.Row="0">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding CurrentQuestion.Number, StringFormat=№ {0}}" />
-                        <TextBlock Text="{Binding CurrentQuestion.Points, StringFormat=Points: {0}}"
-                                   Margin="20,0,0,0" />
+                        <TextBlock Text="№ "
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{Binding CurrentQuestion.Number}"
+                                   Width="30" />
+                        <TextBlock Text="Points: "
+                                   Margin="20,0,0,0"
+                                   FontWeight="Bold"/>
+                        <TextBlock Text="{Binding CurrentQuestion.Points}"/>
                     </StackPanel>
                     <StackPanel>
-                        <Separator Margin="0,20,0,0" />
-                        <TextBlock Text="Answer"
-                                   Margin="0,20,0,0"
-                                   FontWeight="Bold" />
-                        <TextBlock Text="{Binding CurrentQuestion.Answer}"
-                                   Margin="0,10,0,0"
-                                   TextWrapping="WrapWithOverflow" />
                         <Separator Margin="0,20,0,0" />
                         <TextBlock Text="Question"
                                    Margin="0,20,0,0"
@@ -52,6 +50,13 @@
                                    Margin="0,20,0,0"
                                    FontWeight="Bold" />
                         <TextBlock Text="{Binding CurrentQuestion.AlternateQuestion}"
+                                   Margin="0,10,0,0"
+                                   TextWrapping="WrapWithOverflow" />
+                        <Separator Margin="0,20,0,0" />
+                        <TextBlock Text="Answer"
+                                   Margin="0,20,0,0"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding CurrentQuestion.Answer}"
                                    Margin="0,10,0,0"
                                    TextWrapping="WrapWithOverflow" />
                     </StackPanel>

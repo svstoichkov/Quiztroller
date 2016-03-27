@@ -44,7 +44,7 @@
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
-                    <Image Source="trivia Goldmine.png"
+                    <Image Source="logo.png"
                            HorizontalAlignment="Left"
                            Height="{Binding ElementName=mp3, Path=ActualHeight}"
                            Grid.Column="0" />

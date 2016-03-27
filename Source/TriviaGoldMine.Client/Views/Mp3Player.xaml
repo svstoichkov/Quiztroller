@@ -11,9 +11,17 @@
                                   Padding="8">
             <TextBlock Text="{Binding CurrentSong, Converter={StaticResource PathToFileNameConverter}}" HorizontalAlignment="Center"/>
         </materialDesign:ColorZone>
-        <StackPanel Orientation="Horizontal"
-                    Margin="10">
-            <materialDesign:PopupBox IsEnabled="{Binding PopUpEnabled}">
+        <Grid Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <materialDesign:PopupBox Grid.Column="0"
+                                     HorizontalAlignment="Center"
+                IsEnabled="{Binding PopUpEnabled}">
                 <materialDesign:PopupBox.ToggleContent>
                     <materialDesign:PackIcon Kind="PlaylistPlay" Width="30" Height="30"/>
                 </materialDesign:PopupBox.ToggleContent>
@@ -27,29 +35,33 @@
                 </DataGrid>
             </materialDesign:PopupBox>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                    Command="{Binding Previous}">
+                    Command="{Binding Previous}"
+                    Grid.Column="1">
                 <materialDesign:PackIcon Kind="SkipPrevious"
                                          Width="24"
                                          Height="24" />
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                    Command="{Binding Play}">
+                    Command="{Binding Play}"
+                    Grid.Column="2">
                 <materialDesign:PackIcon Kind="Play"
                                          Width="24"
                                          Height="24" />
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                    Command="{Binding Pause}">
+                    Command="{Binding Pause}"
+                    Grid.Column="3">
                 <materialDesign:PackIcon Kind="Pause"
                                          Width="24"
                                          Height="24" />
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
-                    Command="{Binding Next}">
+                    Command="{Binding Next}"
+                    Grid.Column="4">
                 <materialDesign:PackIcon Kind="SkipNext"
                                          Width="24"
                                          Height="24" />
             </Button>
-        </StackPanel>
+        </Grid>
     </StackPanel>
 </materialDesign:Card>

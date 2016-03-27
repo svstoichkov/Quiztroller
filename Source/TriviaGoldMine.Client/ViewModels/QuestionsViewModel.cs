@@ -15,7 +15,6 @@
 
     public class QuestionsViewModel : ViewModelBase
     {
-        private readonly List<Question> questions = new List<Question>(); 
         private Question currentQuestion;
         private int currentQuestionIndex;
 
@@ -28,6 +27,8 @@
         public ICommand Next { get; set; }
 
         public ICommand Previous { get; set; }
+
+        public List<Question> Questions { get; set; } = new List<Question>();
 
         public Question CurrentQuestion
         {
@@ -49,18 +50,18 @@
         private void HandlePrevious()
         {
             this.currentQuestionIndex--;
-            this.CurrentQuestion = this.questions[this.currentQuestionIndex];
+            this.CurrentQuestion = this.Questions[this.currentQuestionIndex];
         }
 
         private void HandleNext()
         {
             this.currentQuestionIndex++;
-            this.CurrentQuestion = this.questions[this.currentQuestionIndex];
+            this.CurrentQuestion = this.Questions[this.currentQuestionIndex];
         }
 
         private bool CanNext()
         {
-            return this.currentQuestionIndex < this.questions.Count - 1;
+            return this.currentQuestionIndex < this.Questions.Count - 1;
         }
 
         public void ParseSpreadsheet(string path)
@@ -72,7 +73,7 @@
                 var dataSet = excelReader.AsDataSet();
 
                 var table = dataSet.Tables[0];
-                this.questions.Clear();
+                this.Questions.Clear();
                 for (int i = 1; i <= 20; i++)
                 {
                     var row = table.Rows[i];
@@ -82,12 +83,12 @@
                     var answer = row[3].ToString();
                     var alternateQuestion = row[6].ToString();
                     var question = new Question(number, points, mainQuestion, answer, alternateQuestion);
-                    this.questions.Add(question);
+                    this.Questions.Add(question);
                 }
 
                 excelReader.Close();
 
-                this.CurrentQuestion = this.questions.First();
+                this.CurrentQuestion = this.Questions.First();
             }
             catch
             {

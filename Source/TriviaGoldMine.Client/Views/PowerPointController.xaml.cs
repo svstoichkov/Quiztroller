@@ -1,6 +1,7 @@
 ﻿namespace TriviaGoldMine.Client.Views
 {
     using System.IO;
+    using System.Linq;
     using System.Windows;
 
     using ViewModels;
@@ -15,7 +16,6 @@
         private void PowerPoint_OnDrop(object sender, DragEventArgs e)
         {
             var droppedFilenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
-            (this.DataContext as Mp3PlayerViewModel).AddSongs(droppedFilenames);
         }
 
         private void PowerPoint_OnDragOver(object sender, DragEventArgs e)
@@ -26,7 +26,7 @@
 
                 foreach (string filename in filenames)
                 {
-                    if (Path.GetExtension(filename)?.ToLower() != ".mp3")
+                    if (Path.GetExtension(filename)?.ToLower() != ".pptx")
                     {
                         e.Effects = DragDropEffects.None;
                         e.Handled = true;
