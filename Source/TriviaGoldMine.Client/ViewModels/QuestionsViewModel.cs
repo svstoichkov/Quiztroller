@@ -81,8 +81,9 @@
                     var points = int.Parse(row[1].ToString());
                     var mainQuestion = row[2].ToString();
                     var answer = row[3].ToString();
+                    var category = row[5].ToString();
                     var alternateQuestion = row[6].ToString();
-                    var question = new Question(number, points, mainQuestion, answer, alternateQuestion);
+                    var question = new Question(number, points, category, mainQuestion, answer, alternateQuestion);
                     this.Questions.Add(question);
                 }
 

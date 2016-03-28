@@ -2,10 +2,11 @@
 {
     public class Question
     {
-        public Question(int number, int points, string mainQuestion, string answer, string alternateQuestion)
+        public Question(int number, int points, string category, string mainQuestion, string answer, string alternateQuestion)
         {
             this.Number = number;
             this.Points = points;
+            this.Category = category;
             this.MainQuestion = mainQuestion;
             this.Answer = answer;
             this.AlternateQuestion = alternateQuestion;
@@ -14,6 +15,8 @@
         public int Number { get; set; }
 
         public int Points { get; set; }
+
+        public string Category { get; set; }
 
         public string MainQuestion { get; set; }
 

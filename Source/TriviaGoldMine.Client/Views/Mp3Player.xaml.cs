@@ -1,6 +1,7 @@
 ﻿namespace TriviaGoldMine.Client.Views
 {
     using System.IO;
+    using System.Linq;
     using System.Windows;
 
     using ViewModels;
@@ -15,6 +16,12 @@
         private void Mp3Player_OnDrop(object sender, DragEventArgs e)
         {
             var droppedFilenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+
+            if (Directory.Exists(droppedFilenames.First()))
+            {
+                droppedFilenames = Directory.GetFiles(droppedFilenames.First());
+            }
+
             (this.DataContext as Mp3PlayerViewModel).AddSongs(droppedFilenames);
         }
 
@@ -23,6 +30,11 @@
             if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
             {
                 var filenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+
+                if (Directory.Exists(filenames.First()))
+                {
+                    filenames = Directory.GetFiles(filenames.First());
+                }
 
                 foreach (string filename in filenames)
                 {

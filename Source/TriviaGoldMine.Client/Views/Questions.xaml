@@ -39,9 +39,14 @@
                         <TextBlock Text="{Binding CurrentQuestion.Number}"
                                    Width="30" />
                         <TextBlock Text="Points: "
+                                   Width="30"
                                    Margin="20,0,0,0"
                                    FontWeight="Bold"/>
-                        <TextBlock Text="{Binding CurrentQuestion.Points}"/>
+                        <TextBlock Text="{Binding CurrentQuestion.Points}" />
+                        <TextBlock Text="Category: "
+                                   Margin="20,0,0,0"
+                                   FontWeight="Bold" />
+                        <TextBlock Text="{Binding CurrentQuestion.Category}" />
                     </StackPanel>
                     <StackPanel>
                         <Separator Margin="0,20,0,0" />

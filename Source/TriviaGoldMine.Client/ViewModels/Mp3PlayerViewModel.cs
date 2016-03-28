@@ -57,10 +57,13 @@
             {
                 this.Set(() => this.CurrentSong, ref this.currentSong, value);
 
-                this.mediaPlayer.Open(new Uri(value));
-                if (this.isPlaying)
+                if (value != null)
                 {
-                    this.mediaPlayer.Play();
+                    this.mediaPlayer.Open(new Uri(value));
+                    if (this.isPlaying)
+                    {
+                        this.mediaPlayer.Play();
+                    }
                 }
             }
         }
@@ -72,6 +75,7 @@
             {
                 this.Songs.Add(filename);
             }
+
             this.PopUpEnabled = true;
             this.CurrentSong = this.Songs.First();
         }
