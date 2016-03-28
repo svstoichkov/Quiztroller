@@ -40,6 +40,7 @@
             </materialDesign:PopupBox>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding Previous}"
+                    Padding="0"
                     Grid.Column="1">
                 <materialDesign:PackIcon Kind="SkipPrevious"
                                          Width="24"
@@ -47,6 +48,7 @@
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding Play}"
+                    Padding="0"
                     Grid.Column="2">
                 <materialDesign:PackIcon Kind="Play"
                                          Width="24"
@@ -54,6 +56,7 @@
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding Pause}"
+                    Padding="0"
                     Grid.Column="3">
                 <materialDesign:PackIcon Kind="Pause"
                                          Width="24"
@@ -61,6 +64,7 @@
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding Next}"
+                    Padding="0"
                     Grid.Column="4">
                 <materialDesign:PackIcon Kind="SkipNext"
                                          Width="24"

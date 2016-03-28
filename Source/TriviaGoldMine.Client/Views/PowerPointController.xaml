@@ -13,7 +13,7 @@
     <StackPanel Orientation="Vertical">
         <materialDesign:ColorZone Mode="Accent"
                                   Padding="8">
-            <TextBlock Text="Second Screen Controller"
+            <TextBlock Text="2nd Screen Controller"
                            HorizontalAlignment="Center" />
         </materialDesign:ColorZone>
         <Grid Margin="10">
@@ -25,6 +25,7 @@
             </Grid.ColumnDefinitions>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding FindPowerPoint}"
+                    Padding="0"
                     Grid.Column="0">
                 <materialDesign:PackIcon Kind="Magnify"
                                          Width="24"
@@ -33,6 +34,7 @@
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding ShowSlideshow}"
+                    Padding="0"
                     Grid.Column="1">
                 <materialDesign:PackIcon Kind="ProjectorScreen"
                                          Width="24"
@@ -40,6 +42,7 @@
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding Previous}"
+                    Padding="0"
                     Grid.Column="2">
                 <materialDesign:PackIcon Kind="ArrowLeftBoldCircleOutline"
                                          Width="24"
@@ -47,6 +50,7 @@
             </Button>
             <Button Style="{StaticResource MaterialDesignFlatButton}"
                     Command="{Binding Next}"
+                    Padding="0"
                     Grid.Column="3">
                 <materialDesign:PackIcon Kind="ArrowRightBoldCircleOutline"
                                          Width="24"

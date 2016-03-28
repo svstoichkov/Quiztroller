@@ -12,30 +12,39 @@
         <materialDesign:ColorZone Mode="Accent"
                                   Padding="8"
                                   Grid.Row="0">
-            <Grid>
             <TextBlock Text="How to Use"
                        TextWrapping="WrapWithOverflow"
                        HorizontalAlignment="Center" />
-                <CheckBox Checked="ToggleButton_OnChecked"
-                          Unchecked="ToggleButton_OnUnchecked"
-                          HorizontalAlignment="Right"
-                          Margin="0,0,20,0"
-                          VerticalAlignment="Center"
-                          VerticalContentAlignment="Center">Do not show again</CheckBox>
-            </Grid>
         </materialDesign:ColorZone>
-        <StackPanel Margin="20"
-              Grid.Row="1">
-            <TextBlock>1. Click on the button in the upper right corner saying "Questions".</TextBlock>
-            <Separator Margin="0,20,0,20" />
-            <TextBlock>2. Drag and drop an excel file in the "Questions" section.</TextBlock>
-            <Separator Margin="0,20,0,20" />
-            <TextBlock>3. Drag and drop one or more .mp3 files in the "Music Player" section.</TextBlock>
-            <Separator Margin="0,20,0,20" />
-            <TextBlock>4. Start the PowerPoint presentation.</TextBlock>
-            <Separator Margin="0,20,0,20" />
-            <TextBlock>5. Use the button with magnifying glass icon in "Second Screen Controller" section to find a running instance of PowerPoint.</TextBlock>
-            <Separator Margin="0,20,0,20" />
-        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          Grid.Row="0">
+                <StackPanel Margin="20">
+                    <TextBlock TextWrapping="WrapWithOverflow">1. Click on the button in the upper right corner saying "Questions".</TextBlock>
+                    <Separator Margin="0,20,0,20" />
+                    <TextBlock TextWrapping="WrapWithOverflow">2. Drag and drop an excel file in the "Questions" section.</TextBlock>
+                    <Separator Margin="0,20,0,20" />
+                    <TextBlock TextWrapping="WrapWithOverflow">3. Drag and drop one or more .mp3 files in the "Music Player" section.</TextBlock>
+                    <Separator Margin="0,20,0,20" />
+                    <TextBlock TextWrapping="WrapWithOverflow">4. Start the PowerPoint presentation.</TextBlock>
+                    <Separator Margin="0,20,0,20" />
+                    <TextBlock TextWrapping="WrapWithOverflow">5. Use the button with magnifying glass icon in "2nd Screen Controller" section to find a running instance of PowerPoint.</TextBlock>
+                    <Separator Margin="0,20,0,20" />
+                </StackPanel>
+            </ScrollViewer>
+            <CheckBox Checked="ToggleButton_OnChecked"
+                      Grid.Row="1"
+                      x:Name="checkBox"
+                      Unchecked="ToggleButton_OnUnchecked"
+                      HorizontalAlignment="Right"
+                      FontWeight="Bold"
+                      Margin="0,0,30,20"
+                      VerticalAlignment="Center"
+                      VerticalContentAlignment="Center">Do not show again</CheckBox>
+        </Grid>
     </Grid>
 </materialDesign:Card>

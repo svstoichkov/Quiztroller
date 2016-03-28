@@ -9,6 +9,7 @@
         public HowToUse()
         {
             this.InitializeComponent();
+            this.checkBox.IsChecked = !Settings.Default.HowToUse;
         }
 
         private void ToggleButton_OnChecked(object sender, RoutedEventArgs e)

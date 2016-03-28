@@ -46,6 +46,7 @@
                         <ColumnDefinition Width="5*" />
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <Image Source="logo.png"
                            HorizontalAlignment="Left"
@@ -60,11 +61,20 @@
                     <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
                             Content="{Binding SwitcherContent}"
                             Command="{Binding Switch}"
-                            MinWidth="150"
+                            MinWidth="130"
                             Focusable="False"
                             HorizontalAlignment="Center"
-                            Margin="20,0,50,0"
+                            Margin="20,0,0,0"
                             Grid.Column="3" />
+                    <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                            Command="{Binding HowToUse}"
+                            Focusable="False"
+                            Padding="5,0,5,0"
+                            HorizontalAlignment="Center"
+                            Margin="10,0,40,0"
+                            Grid.Column="4">
+                        <materialDesign:PackIcon Kind="HelpCircle" Width="30" Height="30"/>
+                    </Button>
                 </Grid>
             </materialDesign:ColorZone>
             <ContentControl Content="{Binding CurrentContent}"

@@ -29,9 +29,23 @@ namespace TriviaGoldMine.Client.ViewModels
                 this.switcherContent = "Questions";
             }
             this.Switch = new RelayCommand(this.HandleSwitch);
+            this.HowToUse = new RelayCommand(this.HandleHowToUse, this.CanHowToUse);
+        }
+
+        private bool CanHowToUse()
+        {
+            return this.CurrentContent != this.howToUse;
+        }
+
+        private void HandleHowToUse()
+        {
+            this.CurrentContent = this.howToUse;
+            this.SwitcherContent = "Questions";
         }
 
         public ICommand Switch { get; set; }
+
+        public ICommand HowToUse { get; set; }
 
         public string SwitcherContent
         {
