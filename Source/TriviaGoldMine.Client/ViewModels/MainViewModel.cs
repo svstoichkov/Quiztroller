@@ -1,11 +1,9 @@
-namespace TriviaGoldMine.Client.ViewModels
+namespace Quiztroller.ViewModels
 {
     using System.Windows.Input;
 
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
-
-    using MaterialDesignThemes.Wpf;
 
     using Properties;
 
@@ -21,7 +19,7 @@ namespace TriviaGoldMine.Client.ViewModels
 
         public MainViewModel()
         {
-            this.currentContent = questions;
+            this.currentContent = this.questions;
             this.switcherContent = "Scoreboard";
             if (Settings.Default.HowToUse)
             {

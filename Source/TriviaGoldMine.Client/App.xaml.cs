@@ -1,10 +1,6 @@
-﻿using System.Windows;
-
-namespace TriviaGoldMine.Client
+﻿namespace Quiztroller
 {
-    using MaterialDesignThemes.Wpf;
-
-    using Views;
+    using System.Windows;
 
     /// <summary>
     /// Interaction logic for App.xaml

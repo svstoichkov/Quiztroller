@@ -1,4 +1,4 @@
-﻿namespace TriviaGoldMine.Client.ViewModels
+﻿namespace Quiztroller.ViewModels
 {
     using System.Runtime.InteropServices;
     using System.Windows;

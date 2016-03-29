@@ -1,4 +1,4 @@
-﻿namespace TriviaGoldMine.Client.Views
+﻿namespace Quiztroller.Views
 {
     using System.IO;
     using System.Linq;

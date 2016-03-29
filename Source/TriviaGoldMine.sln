@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TriviaGoldMine.Client", "TriviaGoldMine.Client\TriviaGoldMine.Client.csproj", "{34521903-C00F-4514-BAA9-6A984D39CF89}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Quiztroller", "TriviaGoldMine.Client\Quiztroller.csproj", "{34521903-C00F-4514-BAA9-6A984D39CF89}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

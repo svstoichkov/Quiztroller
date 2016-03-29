@@ -1,4 +1,4 @@
-﻿namespace TriviaGoldMine.Client
+﻿namespace Quiztroller
 {
     public partial class MainWindow
     {

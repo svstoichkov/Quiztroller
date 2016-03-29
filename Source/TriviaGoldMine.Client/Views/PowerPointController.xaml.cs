@@ -1,10 +1,7 @@
-﻿namespace TriviaGoldMine.Client.Views
+﻿namespace Quiztroller.Views
 {
     using System.IO;
-    using System.Linq;
     using System.Windows;
-
-    using ViewModels;
 
     public partial class PowerPointController
     {

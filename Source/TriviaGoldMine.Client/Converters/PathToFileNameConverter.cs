@@ -1,4 +1,4 @@
-﻿namespace TriviaGoldMine.Client.Converters
+﻿namespace Quiztroller.Converters
 {
     using System;
     using System.Globalization;

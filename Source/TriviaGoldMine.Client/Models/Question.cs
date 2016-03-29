@@ -1,4 +1,4 @@
-﻿namespace TriviaGoldMine.Client.Models
+﻿namespace Quiztroller.Models
 {
     public class Question
     {

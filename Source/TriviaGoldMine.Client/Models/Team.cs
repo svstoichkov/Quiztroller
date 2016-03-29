@@ -1,6 +1,7 @@
-﻿namespace TriviaGoldMine.Client.Models
+﻿namespace Quiztroller.Models
 {
     using GalaSoft.MvvmLight;
+
     public class Team : ViewModelBase
     {
         private int score;

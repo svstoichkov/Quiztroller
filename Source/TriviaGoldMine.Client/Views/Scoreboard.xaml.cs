@@ -1,4 +1,4 @@
-﻿namespace TriviaGoldMine.Client.Views
+﻿namespace Quiztroller.Views
 {
     public partial class Scoreboard
     {
