@@ -25,6 +25,10 @@
         private int points18;
         private int points19;
         private int points20;
+        private int points21;
+        private int points22;
+        private int points23;
+        private int points24;
 
         public int Score
         {
@@ -301,10 +305,63 @@
             }
         }
 
+        public int Points21
+        {
+            get
+            {
+                return this.points21;
+            }
+            set
+            {
+                this.Set(() => this.Points21, ref this.points21, value);
+                this.CalculateScore();
+            }
+        }
+
+        public int Points22
+        {
+            get
+            {
+                return this.points22;
+            }
+            set
+            {
+                this.Set(() => this.Points22, ref this.points22, value);
+                this.CalculateScore();
+            }
+        }
+
+        public int Points23
+        {
+            get
+            {
+                return this.points23;
+            }
+            set
+            {
+                this.Set(() => this.Points23, ref this.points23, value);
+                this.CalculateScore();
+            }
+        }
+
+        public int Points24
+        {
+            get
+            {
+                return this.points24;
+            }
+            set
+            {
+                this.Set(() => this.Points24, ref this.points24, value);
+                this.CalculateScore();
+            }
+        }
+
         private void CalculateScore()
         {
             this.Score = this.Points1 + this.Points2 + this.Points3 + this.Points4 + this.Points5 + this.Points6 + this.Points7 + this.Points8 + this.Points9 + this.Points10
-                         + this.Points11 + this.Points12 + this.Points13 + this.Points14 + this.Points15 + this.Points16 + this.Points17 + this.Points18 + this.Points19 + this.Points20;
+                         + this.Points11 + this.Points12 + this.Points13 + this.Points14 + this.Points15 + this.Points16 + this.Points17 + this.Points18 + this.Points19 + this.Points20
+                         + this.Points21 + this.Points22 + this.Points23 + this.Points24;
         }
     }
 }
