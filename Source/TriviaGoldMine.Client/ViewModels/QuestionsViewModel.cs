@@ -28,7 +28,7 @@
 
         public ICommand Previous { get; set; }
 
-        public List<Question> Questions { get; set; } = new List<Question>();
+        public static List<Question> Questions { get; set; } = new List<Question>();
 
         public Question CurrentQuestion
         {
@@ -50,18 +50,18 @@
         private void HandlePrevious()
         {
             this.currentQuestionIndex--;
-            this.CurrentQuestion = this.Questions[this.currentQuestionIndex];
+            this.CurrentQuestion = Questions[this.currentQuestionIndex];
         }
 
         private void HandleNext()
         {
             this.currentQuestionIndex++;
-            this.CurrentQuestion = this.Questions[this.currentQuestionIndex];
+            this.CurrentQuestion = Questions[this.currentQuestionIndex];
         }
 
         private bool CanNext()
         {
-            return this.currentQuestionIndex < this.Questions.Count - 1;
+            return this.currentQuestionIndex < Questions.Count - 1;
         }
 
         public void ParseSpreadsheet(string path)
@@ -73,23 +73,33 @@
                 var dataSet = excelReader.AsDataSet();
 
                 var table = dataSet.Tables[0];
-                this.Questions.Clear();
-                for (int i = 1; i <= 20; i++)
+                Questions.Clear();
+                for (int i = 1; i <= 24; i++)
                 {
                     var row = table.Rows[i];
-                    var number = int.Parse(row[0].ToString());
+                    var number = row[0].ToString();
                     var points = int.Parse(row[1].ToString());
                     var mainQuestion = row[2].ToString();
                     var answer = row[3].ToString();
                     var category = row[5].ToString();
                     var alternateQuestion = row[6].ToString();
                     var question = new Question(number, points, category, mainQuestion, answer, alternateQuestion);
-                    this.Questions.Add(question);
+                    Questions.Add(question);
+                }
+
+                for (int i = 25; i <= 29; i++)
+                {
+                    var row = table.Rows[i];
+                    var number = row[0].ToString();
+                    var mainQuestion = row[2].ToString();
+                    var answer = row[3].ToString();
+                    var question = new Question(number, 0, " ", mainQuestion, answer, " ");
+                    Questions.Add(question);
                 }
 
                 excelReader.Close();
 
-                this.CurrentQuestion = this.Questions.First();
+                this.CurrentQuestion = Questions.First();
             }
             catch
             {

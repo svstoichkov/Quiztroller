@@ -1,7 +1,10 @@
 ﻿namespace Quiztroller.Views
 {
     using System.IO;
+    using System.Linq;
     using System.Windows;
+
+    using ViewModels;
 
     public partial class PowerPointController
     {
@@ -12,23 +15,20 @@
 
         private void PowerPoint_OnDrop(object sender, DragEventArgs e)
         {
-            var droppedFilenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+            var filename = (e.Data.GetData(DataFormats.FileDrop, true) as string[]).First();
+            ((PowerPointControllerViewModel)this.DataContext).AddFilePath(filename);
         }
 
         private void PowerPoint_OnDragOver(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop, true))
             {
-                var filenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
+                var filename = (e.Data.GetData(DataFormats.FileDrop, true) as string[]).First();
 
-                foreach (string filename in filenames)
+                if (Path.GetExtension(filename)?.ToLower() != ((PowerPointControllerViewModel)this.DataContext).AcceptedExtension)
                 {
-                    if (Path.GetExtension(filename)?.ToLower() != ".pptx")
-                    {
-                        e.Effects = DragDropEffects.None;
-                        e.Handled = true;
-                        break;
-                    }
+                    e.Effects = DragDropEffects.None;
+                    e.Handled = true;
                 }
             }
             else

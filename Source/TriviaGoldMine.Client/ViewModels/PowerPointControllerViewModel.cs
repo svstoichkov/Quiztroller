@@ -1,11 +1,16 @@
 ﻿namespace Quiztroller.ViewModels
 {
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
     using System.Runtime.InteropServices;
     using System.Windows;
     using System.Windows.Input;
 
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
+
+    using Helpers;
 
     using Ppt = Microsoft.Office.Interop.PowerPoint;
 
@@ -17,6 +22,9 @@
         private int slideIndex;
         private Ppt.Slides slides;
         private int slidesCount;
+        private Visibility visibility = Visibility.Visible;
+        private string whatToDo = "Drop 1st image (*.jpg)";
+        private List<string> paths = new List<string>();
 
         public PowerPointControllerViewModel()
         {
@@ -33,6 +41,32 @@
         public ICommand Next { get; set; }
 
         public ICommand Previous { get; set; }
+
+        public Visibility Visibility
+        {
+            get
+            {
+                return this.visibility;
+            }
+            set
+            {
+                this.Set(() => this.Visibility, ref this.visibility, value);
+            }
+        }
+
+        public string WhatToDo
+        {
+            get
+            {
+                return this.whatToDo;
+            }
+            set
+            {
+                this.Set(() => this.WhatToDo, ref this.whatToDo, value);
+            }
+        }
+
+        public string AcceptedExtension { get; set; } = ".jpg";
 
         private bool CanFindPowerPoint()
         {
@@ -77,6 +111,10 @@
             this.slides = null;
             this.pptPresentation = null;
             this.slide = null;
+            this.paths.Clear();
+            this.AcceptedExtension = ".jpg";
+            this.WhatToDo = "Drop 1st image (*.jpg)";
+            this.Visibility = Visibility.Visible;
         }
 
         private bool CanShowSlideshow()
@@ -89,35 +127,42 @@
             this.pptPresentation.SlideShowSettings.Run();
         }
 
-        //public void Start(string path)
-        //{
-        //    Process.Start(path);
-        //
-        //    while (true)
-        //    {
-        //        try
-        //        {
-        //            this.pptApplication = Marshal.GetActiveObject("PowerPoint.Application") as Ppt.Application;
-        //            this.pptApplication.PresentationClose += this.OnClose;
-        //            this.pptPresentation = this.pptApplication.ActivePresentation;
-        //            this.slides = this.pptPresentation.Slides;
-        //            this.slidesCount = this.slides.Count;
-        //            break;
-        //        }
-        //        catch
-        //        {
-        //        }
-        //    }
-        //
-        //    try
-        //    {
-        //        this.slide = this.slides[this.pptApplication.ActiveWindow.Selection.SlideRange.SlideNumber];
-        //    }
-        //    catch
-        //    {
-        //        this.slide = this.pptApplication.SlideShowWindows[1].View.Slide;
-        //    }
-        //}
+        public void AddFilePath(string path)
+        {
+            this.paths.Add(path);
+            if (this.paths.Count == 1)
+            {
+                this.WhatToDo = "Drop 2nd image (*.jpg)";
+            }
+            else if (this.paths.Count == 2)
+            {
+                this.WhatToDo = "Drop 3rd image (*.jpg)";
+            }
+            else if (this.paths.Count == 3)
+            {
+                this.WhatToDo = "Drop video (*.mp4)";
+                this.AcceptedExtension = ".mp4";
+            }
+            else if (this.paths.Count == 4)
+            {
+                this.WhatToDo = "Drop presentation (*.pptx)";
+                this.AcceptedExtension = ".pptx";
+            }
+            else if (this.paths.Count == 5)
+            {
+                try
+                {
+                    var editedPptx = PptxEditor.Edit(QuestionsViewModel.Questions, this.paths[0], this.paths[1], this.paths[2], this.paths[3], this.paths[4]);
+                    this.Visibility = Visibility.Collapsed;
+                    Process.Start(editedPptx);
+                }
+                catch
+                {
+                    MessageBox.Show("Pptx cannot be edited", "Invalid pptx format", MessageBoxButton.OK, MessageBoxImage.Error);
+                    this.paths.Remove(this.paths.Last());
+                }
+            }
+        }
 
         private bool CanNext()
         {
