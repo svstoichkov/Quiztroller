@@ -6,14 +6,29 @@
                      x:Name="mp3Player"
                      AllowDrop="True"
                      Drop="Mp3Player_OnDrop"
-                     DragOver="Mp3Player_OnDragOver">
-    <materialDesign:Card.DataContext>
-        <viewModels:Mp3PlayerViewModel />
-    </materialDesign:Card.DataContext>
+                     DragOver="Mp3Player_OnDragOver"
+                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Mp3PlayerViewModel}">
     <StackPanel Orientation="Vertical">
         <materialDesign:ColorZone Mode="Accent"
                                   Padding="8">
-            <TextBlock Text="{Binding CurrentSong, Converter={StaticResource PathToFileNameConverter}}" HorizontalAlignment="Center"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding CurrentSong, Converter={StaticResource PathToFileNameConverter}}"
+                           HorizontalAlignment="Center"
+                           Grid.Column="0" />
+                <StackPanel Orientation="Horizontal"
+                            Margin="20,0,0,0"
+                            Grid.Column="1">
+                    <TextBlock Text="{Binding Elapsed}" Foreground="White"/>
+                    <TextBlock Text=" / "
+                               Foreground="White" />
+                    <TextBlock Text="{Binding Length}"
+                               Foreground="White" />
+                </StackPanel>
+            </Grid>
         </materialDesign:ColorZone>
         <Grid Margin="10">
             <Grid.ColumnDefinitions>
@@ -25,9 +40,11 @@
             </Grid.ColumnDefinitions>
             <materialDesign:PopupBox Grid.Column="0"
                                      HorizontalAlignment="Center"
-                IsEnabled="{Binding PopUpEnabled}">
+                                     IsEnabled="{Binding PopUpEnabled}">
                 <materialDesign:PopupBox.ToggleContent>
-                    <materialDesign:PackIcon Kind="PlaylistPlay" Width="30" Height="30"/>
+                    <materialDesign:PackIcon Kind="PlaylistPlay"
+                                             Width="30"
+                                             Height="30" />
                 </materialDesign:PopupBox.ToggleContent>
                 <DataGrid ItemsSource="{Binding Songs}"
                           HeadersVisibility="None"

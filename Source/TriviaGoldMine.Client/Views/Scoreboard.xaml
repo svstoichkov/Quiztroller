@@ -2,14 +2,9 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                     xmlns:viewModels="clr-namespace:Quiztroller.ViewModels">
-    <materialDesign:Card.DataContext>
-        <viewModels:ScoreboardViewModel />
-    </materialDesign:Card.DataContext>
-    <materialDesign:Card.Resources>
-        <SolidColorBrush x:Key="clBr"
-                         Color="DodgerBlue" />
-    </materialDesign:Card.Resources>
+                     xmlns:viewModels="clr-namespace:Quiztroller.ViewModels"
+                     xmlns:views="clr-namespace:Quiztroller.Views"
+                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=ScoreboardViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -25,123 +20,16 @@
               Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <DataGrid ItemsSource="{Binding Teams}"
-                      x:Name="dataGrid"
-                      AutoGenerateColumns="False"
-                      Grid.Row="1"
-                      CanUserReorderColumns="False"
-                      CanUserAddRows="False"
-                      CanUserDeleteRows="False"
-                      HorizontalScrollBarVisibility="Auto">
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Score"
-                                        IsReadOnly="True"
-                                        Width="2*"
-                                        Binding="{Binding Score}">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell"
-                                   BasedOn="{StaticResource MaterialDesignDataGridCell}">
-                                <Setter Property="FontWeight"
-                                        Value="Bold" />
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                        
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="Name"
-                                        Width="4*"
-                                        Binding="{Binding Name}" />
-                    <DataGridTextColumn Header="1"
-                                        Width="1*"
-                                        Binding="{Binding Points1}">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell"
-                                   BasedOn="{StaticResource MaterialDesignDataGridCell}">
-                                <Setter Property="Background"
-                                        Value="{StaticResource clBr}" />
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="2"
-                                        Width="1*"
-                                        Binding="{Binding Points2}" />
-                    <DataGridTextColumn Header="3"
-                                        Width="1*"
-                                        Binding="{Binding Points3}" />
-                    <DataGridTextColumn Header="4"
-                                        Width="1*"
-                                        Binding="{Binding Points4}" />
-                    <DataGridTextColumn Header="5"
-                                        Width="1*"
-                                        Binding="{Binding Points5}" />
-                    <DataGridTextColumn Header="6"
-                                        Width="1*"
-                                        Binding="{Binding Points6}" />
-                    <DataGridTextColumn Header="7"
-                                        Width="1*"
-                                        Binding="{Binding Points7}" />
-                    <DataGridTextColumn Header="8"
-                                        Width="1*"
-                                        Binding="{Binding Points8}" />
-                    <DataGridTextColumn Header="9"
-                                        Width="1*"
-                                        Binding="{Binding Points9}" />
-                    <DataGridTextColumn Header="10"
-                                        Width="1*"
-                                        Binding="{Binding Points10}" />
-                    <DataGridTextColumn Header="11"
-                                        Width="1*"
-                                        Binding="{Binding Points11}" />
-                    <DataGridTextColumn Header="12"
-                                        Width="1*"
-                                        Binding="{Binding Points12}" />
-                    <DataGridTextColumn Header="13"
-                                        Width="1*"
-                                        Binding="{Binding Points13}">
-                        <DataGridTextColumn.CellStyle>
-                            <Style TargetType="DataGridCell"
-                                   BasedOn="{StaticResource MaterialDesignDataGridCell}">
-                                <Setter Property="Background"
-                                        Value="{StaticResource clBr}" />
-                            </Style>
-                        </DataGridTextColumn.CellStyle>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Header="14"
-                                        Width="1*"
-                                        Binding="{Binding Points14}" />
-                    <DataGridTextColumn Header="15"
-                                        Width="1*"
-                                        Binding="{Binding Points15}" />
-                    <DataGridTextColumn Header="16"
-                                        Width="1*"
-                                        Binding="{Binding Points16}" />
-                    <DataGridTextColumn Header="17"
-                                        Width="1*"
-                                        Binding="{Binding Points17}" />
-                    <DataGridTextColumn Header="18"
-                                        Width="1*"
-                                        Binding="{Binding Points18}" />
-                    <DataGridTextColumn Header="19"
-                                        Width="1*"
-                                        Binding="{Binding Points19}" />
-                    <DataGridTextColumn Header="20"
-                                        Width="1*"
-                                        Binding="{Binding Points20}" />
-                    <DataGridTextColumn Header="21"
-                                        Width="1*"
-                                        Binding="{Binding Points21}" />
-                    <DataGridTextColumn Header="22"
-                                        Width="1*"
-                                        Binding="{Binding Points22}" />
-                    <DataGridTextColumn Header="23"
-                                        Width="1*"
-                                        Binding="{Binding Points23}" />
-                    <DataGridTextColumn Header="24"
-                                        Width="1*"
-                                        Binding="{Binding Points24}" />
-                </DataGrid.Columns>
-            </DataGrid>
+            <views:ScoreboardDataGrid Grid.Row="0"
+                                      DataContext="{Binding Top3}" />
+            <Separator Grid.Row="1"
+                       Margin="20" 
+                       Height="5"/>
+            <views:ScoreboardDataGrid Grid.Row="2"
+                                      DataContext="{Binding Teams}" />
         </Grid>
     </Grid>
 </materialDesign:Card>

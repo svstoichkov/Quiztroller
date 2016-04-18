@@ -5,30 +5,30 @@
     public class Team : ViewModelBase
     {
         private int score;
-        private int points1;
-        private int points2;
-        private int points3;
-        private int points4;
-        private int points5;
-        private int points6;
-        private int points7;
-        private int points8;
-        private int points9;
-        private int points10;
-        private int points11;
-        private int points12;
-        private int points13;
-        private int points14;
-        private int points15;
-        private int points16;
-        private int points17;
-        private int points18;
-        private int points19;
-        private int points20;
-        private int points21;
-        private int points22;
-        private int points23;
-        private int points24;
+        private int? points1;
+        private int? points2;
+        private int? points3;
+        private int? points4;
+        private int? points5;
+        private int? points6;
+        private int? points7;
+        private int? points8;
+        private int? points9;
+        private int? points10;
+        private int? points11;
+        private int? points12;
+        private int? points13;
+        private int? points14;
+        private int? points15;
+        private int? points16;
+        private int? points17;
+        private int? points18;
+        private int? points19;
+        private int? points20;
+        private int? points21;
+        private int? points22;
+        private int? points23;
+        private int? points24;
 
         public int Score
         {
@@ -44,7 +44,7 @@
 
         public string Name { get; set; }
 
-        public int Points1
+        public int? Points1
         {
             get
             {
@@ -56,8 +56,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points2
+                  
+        public int? Points2
         {
             get
             {
@@ -70,8 +70,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points3
+                  
+        public int? Points3
         {
             get
             {
@@ -83,8 +83,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points4
+                  
+        public int? Points4
         {
             get
             {
@@ -96,8 +96,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points5
+                  
+        public int? Points5
         {
             get
             {
@@ -109,8 +109,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points6
+                  
+        public int? Points6
         {
             get
             {
@@ -122,8 +122,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points7
+                  
+        public int? Points7
         {
             get
             {
@@ -135,8 +135,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points8
+                  
+        public int? Points8
         {
             get
             {
@@ -148,8 +148,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points9
+                  
+        public int? Points9
         {
             get
             {
@@ -161,8 +161,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points10
+                  
+        public int? Points10
         {
             get
             {
@@ -174,8 +174,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points11
+                  
+        public int? Points11
         {
             get
             {
@@ -187,8 +187,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points12
+                  
+        public int? Points12
         {
             get
             {
@@ -200,8 +200,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points13
+                  
+        public int? Points13
         {
             get
             {
@@ -213,8 +213,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points14
+                  
+        public int? Points14
         {
             get
             {
@@ -226,8 +226,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points15
+                  
+        public int? Points15
         {
             get
             {
@@ -239,8 +239,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points16
+                  
+        public int? Points16
         {
             get
             {
@@ -252,8 +252,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points17
+                  
+        public int? Points17
         {
             get
             {
@@ -265,8 +265,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points18
+                  
+        public int? Points18
         {
             get
             {
@@ -278,8 +278,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points19
+                  
+        public int? Points19
         {
             get
             {
@@ -291,8 +291,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points20
+                  
+        public int? Points20
         {
             get
             {
@@ -304,8 +304,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points21
+                  
+        public int? Points21
         {
             get
             {
@@ -317,8 +317,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points22
+                  
+        public int? Points22
         {
             get
             {
@@ -330,8 +330,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points23
+                  
+        public int? Points23
         {
             get
             {
@@ -343,8 +343,8 @@
                 this.CalculateScore();
             }
         }
-
-        public int Points24
+                  
+        public int? Points24
         {
             get
             {
@@ -359,9 +359,30 @@
 
         private void CalculateScore()
         {
-            this.Score = this.Points1 + this.Points2 + this.Points3 + this.Points4 + this.Points5 + this.Points6 + this.Points7 + this.Points8 + this.Points9 + this.Points10
-                         + this.Points11 + this.Points12 + this.Points13 + this.Points14 + this.Points15 + this.Points16 + this.Points17 + this.Points18 + this.Points19 + this.Points20
-                         + this.Points21 + this.Points22 + this.Points23 + this.Points24;
+            this.Score = this.Points1.GetValueOrDefault(0) 
+                + this.Points2.GetValueOrDefault(0) 
+                + this.Points3.GetValueOrDefault(0) 
+                + this.Points4.GetValueOrDefault(0) 
+                + this.Points5.GetValueOrDefault(0)
+                + this.Points6.GetValueOrDefault(0)
+                + this.Points7.GetValueOrDefault(0)
+                + this.Points8.GetValueOrDefault(0)
+                + this.Points9.GetValueOrDefault(0)
+                + this.Points10.GetValueOrDefault(0)
+                + this.Points11.GetValueOrDefault(0) 
+                + this.Points12.GetValueOrDefault(0) 
+                + this.Points13.GetValueOrDefault(0) 
+                + this.Points14.GetValueOrDefault(0) 
+                + this.Points15.GetValueOrDefault(0) 
+                + this.Points16.GetValueOrDefault(0) 
+                + this.Points17.GetValueOrDefault(0) 
+                + this.Points18.GetValueOrDefault(0) 
+                + this.Points19.GetValueOrDefault(0) 
+                + this.Points20.GetValueOrDefault(0)
+                + this.Points21.GetValueOrDefault(0) 
+                + this.Points22.GetValueOrDefault(0) 
+                + this.Points23.GetValueOrDefault(0) 
+                + this.Points24.GetValueOrDefault(0);
         }
     }
 }

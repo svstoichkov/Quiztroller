@@ -3,8 +3,11 @@
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
+
+    using Autofac;
 
     using Excel;
 
@@ -17,11 +20,14 @@
     {
         private Question currentQuestion;
         private int currentQuestionIndex;
+        private readonly PowerPointControllerViewModel controller;
 
         public QuestionsViewModel()
         {
             this.Next = new RelayCommand(this.HandleNext, this.CanNext);
             this.Previous = new RelayCommand(this.HandlePrevious, this.CanPrevious);
+
+            this.controller = ViewModelLocator.Container.Resolve<PowerPointControllerViewModel>();
         }
 
         public ICommand Next { get; set; }
@@ -51,12 +57,16 @@
         {
             this.currentQuestionIndex--;
             this.CurrentQuestion = Questions[this.currentQuestionIndex];
+
+            //this.controller.PreviousSlide();
         }
 
         private void HandleNext()
         {
             this.currentQuestionIndex++;
             this.CurrentQuestion = Questions[this.currentQuestionIndex];
+
+            this.controller.NextSlide();
         }
 
         private bool CanNext()

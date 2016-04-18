@@ -2,16 +2,13 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                     xmlns:viewModels="clr-namespace:Quiztroller.ViewModels"
                      x:Name="questions"
                      AllowDrop="True"
                      Drop="Questions_OnDrop"
                      DragOver="Questions_OnDragOver"
                      VerticalAlignment="Stretch"
-                     VerticalContentAlignment="Stretch">
-    <materialDesign:Card.DataContext>
-        <viewModels:QuestionsViewModel />
-    </materialDesign:Card.DataContext>
+                     VerticalContentAlignment="Stretch"
+                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=QuestionsViewModel}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />

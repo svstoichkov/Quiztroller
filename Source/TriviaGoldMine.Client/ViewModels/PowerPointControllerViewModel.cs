@@ -185,6 +185,19 @@
             }
         }
 
+        public void NextSlide()
+        {
+            try
+            {
+                this.pptApplication.SlideShowWindows[1].View.GotoSlide(this.slide.SlideIndex + 1);
+                this.slide = this.pptApplication.SlideShowWindows[1].View.Slide;
+                this.slideIndex = this.slide.SlideIndex + 1;
+            }
+            catch
+            {
+            }
+        }
+
         private bool CanPrevious()
         {
             return this.pptApplication != null && this.slideIndex > 1;
@@ -203,6 +216,19 @@
             {
                 this.pptApplication.SlideShowWindows[1].View.Previous();
                 this.slide = this.pptApplication.SlideShowWindows[1].View.Slide;
+            }
+        }
+
+        public void PreviousSlide()
+        {
+            try
+            {
+                this.pptApplication.SlideShowWindows[1].View.GotoSlide(this.slide.SlideIndex - 1);
+                this.slide = this.pptApplication.SlideShowWindows[1].View.Slide;
+                this.slideIndex = this.slide.SlideIndex - 1;
+            }
+            catch
+            {
             }
         }
     }

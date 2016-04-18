@@ -6,10 +6,8 @@
                      x:Name="powerPoint"
                      AllowDrop="True"
                      Drop="PowerPoint_OnDrop"
-                     DragOver="PowerPoint_OnDragOver">
-    <materialDesign:Card.DataContext>
-        <viewModels:PowerPointControllerViewModel />
-    </materialDesign:Card.DataContext>
+                     DragOver="PowerPoint_OnDragOver"
+                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PowerPointControllerViewModel}">
     <StackPanel Orientation="Vertical">
         <materialDesign:ColorZone Mode="Accent"
                                   Padding="8">

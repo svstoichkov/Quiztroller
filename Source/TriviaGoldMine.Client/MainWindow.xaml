@@ -4,7 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:viewModels="clr-namespace:Quiztroller.ViewModels"
         xmlns:views="clr-namespace:Quiztroller.Views"
         mc:Ignorable="d"
         Title="Quiztroller"
@@ -15,10 +14,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="26"
-        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
-    <Window.DataContext>
-        <viewModels:MainViewModel />
-    </Window.DataContext>
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}">
     <materialDesign:DialogHost x:Name="dialogHost"
                                Identifier="RootDialog"
                                IsTabStop="False">

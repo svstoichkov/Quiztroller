@@ -5,17 +5,22 @@
     using System.Linq;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.Threading;
 
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
 
     public class Mp3PlayerViewModel : ViewModelBase
     {
+        private readonly MediaPlayer mediaPlayer = new MediaPlayer();
+        private readonly DispatcherTimer timer = new DispatcherTimer();
+
         private int currentSongIndex;
         private string currentSong = "Music Player";
-        private readonly MediaPlayer mediaPlayer = new MediaPlayer();
         private bool isPlaying;
         private bool popUpEnabled;
+        private string elapsed = "0:00";
+        private string length = "0:00";
 
         public Mp3PlayerViewModel()
         {
@@ -23,6 +28,11 @@
             this.Pause = new RelayCommand(this.HandlePause, this.CanPause);
             this.Previous = new RelayCommand(this.HandlePrevious, this.HasMp3);
             this.Next = new RelayCommand(this.HandleNext, this.HasMp3);
+
+            this.timer.Interval = TimeSpan.FromSeconds(1);
+            this.timer.Tick += this.OnTimer;
+
+            this.mediaPlayer.MediaOpened += this.OnMediaOpened;
         }
 
         public ICommand Play { get; set; }
@@ -34,6 +44,30 @@
         public ICommand Next { get; set; }
 
         public ObservableCollection<string> Songs { get; set; } = new ObservableCollection<string>();
+
+        public string Elapsed
+        {
+            get
+            {
+                return this.elapsed;
+            }
+            set
+            {
+                this.Set(() => this.Elapsed, ref this.elapsed, value);
+            }
+        }
+
+        public string Length
+        {
+            get
+            {
+                return this.length;
+            }
+            set
+            {
+                this.Set(() => this.Length, ref this.length, value);
+            }
+        }
 
         public bool PopUpEnabled
         {
@@ -134,6 +168,18 @@
         {
             this.mediaPlayer.Pause();
             this.isPlaying = false;
+        }
+
+        private void OnTimer(object sender, EventArgs e)
+        {
+            this.Elapsed = this.mediaPlayer.Position.ToString(@"m\:ss");
+        }
+
+        private void OnMediaOpened(object sender, EventArgs e)
+        {
+            this.timer.Start();
+            this.Length = this.mediaPlayer.NaturalDuration.TimeSpan.ToString(@"m\:ss");
+            this.Elapsed = "0:00";
         }
     }
 }
