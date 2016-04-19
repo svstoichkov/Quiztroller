@@ -140,8 +140,7 @@
             }
             else if (this.paths.Count == 3)
             {
-                this.WhatToDo = "Drop video (*.mp4)";
-                this.AcceptedExtension = ".mp4";
+                this.WhatToDo = "Drop 4th image (*.jpg)";
             }
             else if (this.paths.Count == 4)
             {

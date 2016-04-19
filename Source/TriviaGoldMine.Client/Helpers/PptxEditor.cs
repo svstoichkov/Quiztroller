@@ -11,7 +11,7 @@
 
     public static class PptxEditor
     {
-        public static string Edit(List<Question> questions, string img1Path, string img2Path, string img3Path, string videoPath, string pptxPath)
+        public static string Edit(List<Question> questions, string img1Path, string img2Path, string img3Path, string img4Path, string pptxPath)
         {
             var tempFolder = Path.Combine(Path.GetTempPath(), "Quiztroller");
             var newFile = Path.Combine(tempFolder, Path.GetFileName(pptxPath));
@@ -32,7 +32,7 @@
 
             using (var archive = ZipFile.Open(newFile, ZipArchiveMode.Update))
             {
-                ReplaceMedia(img1Path, img2Path, img3Path, videoPath, archive);
+                ReplaceMedia(img1Path, img2Path, img3Path, img4Path, archive);
                 ReplaceQuestions(questions, archive, tempFolder);
             }
 
@@ -90,22 +90,22 @@
             }
         }
 
-        private static void ReplaceMedia(string img1Path, string img2Path, string img3Path, string videoPath, ZipArchive archive)
+        private static void ReplaceMedia(string img1Path, string img2Path, string img3Path, string img4Path, ZipArchive archive)
         {
             var img1 = archive.Entries.FirstOrDefault(x => x.Length == 2585);
             var img2 = archive.Entries.FirstOrDefault(x => x.Length == 2583);
             var img3 = archive.Entries.FirstOrDefault(x => x.Length == 2930);
-            var video = archive.Entries.FirstOrDefault(x => x.Length == 7352);
+            var img4 = archive.Entries.FirstOrDefault(x => x.Length == 10242);
 
             img1.Delete();
             img2.Delete();
             img3.Delete();
-            video.Delete();
+            img4.Delete();
 
             archive.CreateEntryFromFile(img1Path, img1.FullName);
             archive.CreateEntryFromFile(img2Path, img2.FullName);
             archive.CreateEntryFromFile(img3Path, img3.FullName);
-            archive.CreateEntryFromFile(videoPath, video.FullName);
+            archive.CreateEntryFromFile(img4Path, img4.FullName);
         }
     }
 }
