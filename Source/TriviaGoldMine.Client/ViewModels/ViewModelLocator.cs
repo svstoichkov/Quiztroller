@@ -21,6 +21,8 @@
 
         public ScoreboardViewModel ScoreboardViewModel => Container.Resolve<ScoreboardViewModel>();
 
+        public LoginViewModel LoginViewModel => Container.Resolve<LoginViewModel>();
+
         private void Register()
         {
             var containerBuilder = new ContainerBuilder();
@@ -30,6 +32,7 @@
             containerBuilder.RegisterType<PowerPointControllerViewModel>().SingleInstance();
             containerBuilder.RegisterType<QuestionsViewModel>().SingleInstance();
             containerBuilder.RegisterType<ScoreboardViewModel>().SingleInstance();
+            containerBuilder.RegisterType<LoginViewModel>().SingleInstance();
 
             Container = containerBuilder.Build();
         }

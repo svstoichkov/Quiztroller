@@ -16,69 +16,71 @@
         TextElement.FontSize="26"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=MainViewModel}">
-    <materialDesign:DialogHost x:Name="dialogHost"
-                               Identifier="RootDialog"
-                               IsTabStop="False">
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <materialDesign:ColorZone Mode="PrimaryDark"
-                                      Grid.Row="0"
-                                      Grid.Column="0"
-                                      Grid.ColumnSpan="2"
-                                      Panel.ZIndex="1"
-                                      Padding="16"
-                                      IsTabStop="False"
-                                      materialDesign:ShadowAssist.ShadowDepth="Depth3">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="5*" />
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <Image Source="logo.png"
-                           HorizontalAlignment="Left"
-                           Height="{Binding ElementName=mp3, Path=ActualHeight}"
-                           Grid.Column="0" />
-                    <views:Mp3Player Grid.Column="1"
-                                     x:Name="mp3"
-                                     Focusable="False"
-                                     Margin="10,0,0,0"/>
-                    <views:PowerPointController Grid.Column="2"
-                                                Margin="10,0,0,0"/>
-                    <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                            Content="{Binding SwitcherContent}"
-                            Command="{Binding Switch}"
-                            MinWidth="130"
-                            Focusable="False"
-                            HorizontalAlignment="Center"
-                            Margin="20,0,0,0"
-                            Grid.Column="3" />
-                    <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
-                            Command="{Binding HowToUse}"
-                            Focusable="False"
-                            Padding="5,0,5,0"
-                            HorizontalAlignment="Center"
-                            Margin="10,0,40,0"
-                            Grid.Column="4">
-                        <materialDesign:PackIcon Kind="HelpCircle" Width="30" Height="30"/>
-                    </Button>
-                </Grid>
-            </materialDesign:ColorZone>
-            <ContentControl Content="{Binding CurrentContent}"
-                            Grid.Row="2"
-                            Grid.Column="0"
-                            Grid.ColumnSpan="2"
-                            Margin="20" />
-        </Grid>
-    </materialDesign:DialogHost>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <views:Login Grid.Row="0"
+                     Grid.RowSpan="3"
+                     Grid.ColumnSpan="2"
+                     ZIndex="{Binding Source={StaticResource ViewModelLocator}, Path=LoginViewModel.ZIndex}"/>
+        <materialDesign:ColorZone Mode="PrimaryDark"
+                                  Grid.Row="0"
+                                  Grid.Column="0"
+                                  Grid.ColumnSpan="2"
+                                  Panel.ZIndex="1"
+                                  Padding="16"
+                                  IsTabStop="False"
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth3">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="5*" />
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Image Source="logo.png"
+                       HorizontalAlignment="Left"
+                       Height="{Binding ElementName=mp3, Path=ActualHeight}"
+                       Grid.Column="0" />
+                <views:Mp3Player Grid.Column="1"
+                                 x:Name="mp3"
+                                 Focusable="False"
+                                 Margin="10,0,0,0" />
+                <views:PowerPointController Grid.Column="2"
+                                            Margin="10,0,0,0" />
+                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Content="{Binding SwitcherContent}"
+                        Command="{Binding Switch}"
+                        MinWidth="130"
+                        Focusable="False"
+                        HorizontalAlignment="Center"
+                        Margin="20,0,0,0"
+                        Grid.Column="3" />
+                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Command="{Binding HowToUse}"
+                        Focusable="False"
+                        Padding="5,0,5,0"
+                        HorizontalAlignment="Center"
+                        Margin="10,0,40,0"
+                        Grid.Column="4">
+                    <materialDesign:PackIcon Kind="HelpCircle"
+                                             Width="30"
+                                             Height="30" />
+                </Button>
+            </Grid>
+        </materialDesign:ColorZone>
+        <ContentControl Content="{Binding CurrentContent}"
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="20" />
+    </Grid>
 </Window>

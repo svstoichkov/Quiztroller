@@ -30,20 +30,10 @@ namespace Quiztroller.ViewModels
             this.HowToUse = new RelayCommand(this.HandleHowToUse, this.CanHowToUse);
         }
 
-        private bool CanHowToUse()
-        {
-            return this.CurrentContent != this.howToUse;
-        }
-
-        private void HandleHowToUse()
-        {
-            this.CurrentContent = this.howToUse;
-            this.SwitcherContent = "Questions";
-        }
-
         public ICommand Switch { get; set; }
 
         public ICommand HowToUse { get; set; }
+
 
         public string SwitcherContent
         {
@@ -81,6 +71,17 @@ namespace Quiztroller.ViewModels
                 this.CurrentContent = this.questions;
                 this.SwitcherContent = "Scoreboard";
             }
+        }
+
+        private bool CanHowToUse()
+        {
+            return this.CurrentContent != this.howToUse;
+        }
+
+        private void HandleHowToUse()
+        {
+            this.CurrentContent = this.howToUse;
+            this.SwitcherContent = "Questions";
         }
     }
 }
