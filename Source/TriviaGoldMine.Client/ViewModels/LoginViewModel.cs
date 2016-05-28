@@ -19,6 +19,10 @@
 
         public LoginViewModel()
         {
+#if DEBUG
+            this.zIndex = 0;
+#endif
+
             this.Login = new RelayCommand(this.HandleLogin, this.CanSave);
         }
 

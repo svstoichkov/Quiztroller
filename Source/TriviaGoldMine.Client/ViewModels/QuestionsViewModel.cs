@@ -1,5 +1,6 @@
 ﻿namespace Quiztroller.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
@@ -15,6 +16,8 @@
     using GalaSoft.MvvmLight.CommandWpf;
 
     using Models;
+
+    using Quizbuilder;
 
     public class QuestionsViewModel : ViewModelBase
     {
@@ -74,47 +77,6 @@
             return this.currentQuestionIndex < Questions.Count - 1;
         }
 
-        public void ParseSpreadsheet(string path)
-        {
-            try
-            {
-                var stream = File.Open(path, FileMode.Open, FileAccess.Read);
-                var excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-                var dataSet = excelReader.AsDataSet();
-
-                var table = dataSet.Tables[0];
-                Questions.Clear();
-                for (int i = 1; i <= 24; i++)
-                {
-                    var row = table.Rows[i];
-                    var number = row[0].ToString();
-                    var points = int.Parse(row[1].ToString());
-                    var mainQuestion = row[2].ToString();
-                    var answer = row[3].ToString();
-                    var category = row[5].ToString();
-                    var alternateQuestion = row[6].ToString();
-                    var question = new Question(number, points, category, mainQuestion, answer, alternateQuestion);
-                    Questions.Add(question);
-                }
-
-                for (int i = 25; i <= 29; i++)
-                {
-                    var row = table.Rows[i];
-                    var number = row[0].ToString();
-                    var mainQuestion = row[2].ToString();
-                    var answer = row[3].ToString();
-                    var question = new Question(number, 0, " ", mainQuestion, answer, " ");
-                    Questions.Add(question);
-                }
-
-                excelReader.Close();
-
-                this.CurrentQuestion = Questions.First();
-            }
-            catch
-            {
-                MessageBox.Show("Error when parsing the spreadsheet.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-        }
+        
     }
 }

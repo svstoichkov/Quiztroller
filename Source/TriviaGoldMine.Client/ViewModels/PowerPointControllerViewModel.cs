@@ -149,17 +149,17 @@
             }
             else if (this.paths.Count == 5)
             {
-                try
-                {
-                    var editedPptx = PptxEditor.Edit(QuestionsViewModel.Questions, this.paths[0], this.paths[1], this.paths[2], this.paths[3], this.paths[4]);
-                    this.Visibility = Visibility.Collapsed;
-                    Process.Start(editedPptx);
-                }
-                catch
-                {
-                    MessageBox.Show("Pptx cannot be edited", "Invalid pptx format", MessageBoxButton.OK, MessageBoxImage.Error);
-                    this.paths.Remove(this.paths.Last());
-                }
+                //try
+                //{
+                    //var editedPptx = PptxEditor.Edit(QuestionsViewModel.Questions, this.paths[0], this.paths[1], this.paths[2], this.paths[3], this.paths[4]);
+                    //this.Visibility = Visibility.Collapsed;
+                    //Process.Start(editedPptx);
+                //}
+                //catch
+                //{
+                //    MessageBox.Show("Pptx cannot be edited", "Invalid pptx format", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    this.paths.Remove(this.paths.Last());
+                //}
             }
         }
 

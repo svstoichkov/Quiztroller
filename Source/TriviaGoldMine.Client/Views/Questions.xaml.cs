@@ -16,7 +16,7 @@
         private void Questions_OnDrop(object sender, DragEventArgs e)
         {
             var droppedFilenames = e.Data.GetData(DataFormats.FileDrop, true) as string[];
-            (this.DataContext as QuestionsViewModel).ParseSpreadsheet(droppedFilenames.First());
+            //(this.DataContext as QuestionsViewModel).ParseSpreadsheet(droppedFilenames.First());
         }
 
         private void Questions_OnDragOver(object sender, DragEventArgs e)

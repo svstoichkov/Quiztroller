@@ -1,0 +1,86 @@
+﻿<Window x:Class="Quizbuilder.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:quizbuilder="clr-namespace:Quizbuilder"
+        Title="Quizbuilder"
+        Width="500"
+        Height="400"
+        ResizeMode="CanMinimize">
+    <Window.DataContext>
+        <quizbuilder:MainViewModel />
+    </Window.DataContext>
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Powerpoint template" />
+        <TextBox Grid.Row="1"
+                 Grid.Column="0"
+                 IsReadOnly="True"
+                 Text="{Binding PowerpointPath}" />
+        <Button Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Command="{Binding SelectPowerpoint}"
+                Content="Select file" />
+        <TextBlock Grid.Row="2"
+                   Grid.Column="0"
+                   Margin="0,10,0,0"
+                   Text="Excel file" />
+        <TextBox Grid.Row="3"
+                 Grid.Column="0"
+                 IsReadOnly="True"
+                 Text="{Binding ExcelPath}" />
+        <Button Grid.Row="3"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Command="{Binding SelectExcel}"
+                Content="Select file" />
+        <TextBlock Grid.Row="4"
+                   Grid.Column="0"
+                   Margin="0,10,0,0"
+                   Text="Speed round 1 images" />
+        <TextBox Grid.Row="5"
+                 Grid.Column="0"
+                 IsReadOnly="True"
+                 Text="{Binding SpeedRound1ImagesPaths}" />
+        <Button Grid.Row="5"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Command="{Binding SelectSpeedRound1Images}"
+                Content="Select files" />
+        <TextBlock Grid.Row="6"
+                   Grid.Column="0"
+                   Margin="0,10,0,0"
+                   Text="Speed round 2 images" />
+        <TextBox Grid.Row="7"
+                 Grid.Column="0"
+                 IsReadOnly="True"
+                 Text="{Binding SpeedRound2ImagesPaths}" />
+        <Button Grid.Row="7"
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Command="{Binding SelectSpeedRound2Images}"
+                Content="Select files" />
+        <Button Grid.Row="9"
+                Grid.Column="1"
+                VerticalAlignment="Bottom"
+                Command="{Binding Save}"
+                Content="Save" />
+    </Grid>
+</Window>

@@ -1,8 +1,8 @@
-﻿namespace Quiztroller.Models
+﻿namespace Quizbuilder
 {
     public class Question
     {
-        public Question(string number, int points, string category, string mainQuestion, string answer, string alternateQuestion)
+        public Question(string number, string points, string category, string mainQuestion, string answer, string alternateQuestion)
         {
             this.Number = number;
             this.Points = points;
@@ -14,7 +14,7 @@
 
         public string Number { get; set; }
 
-        public int Points { get; set; }
+        public string Points { get; set; }
 
         public string Category { get; set; }
 
