@@ -28,7 +28,7 @@
     <InstallUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quiztroller/</InstallUrl>
     <UpdateUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quiztroller/</UpdateUrl>
     <PublisherName>Svetlozar Stoichkov</PublisherName>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>4</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -66,6 +66,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Quiztroller Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
@@ -268,12 +271,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo.png" />
+    <Resource Include="logo.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="phantomjs.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Quiztroller Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <PublishFile Include="phantomjs.exe">
@@ -292,6 +298,14 @@
       <Project>{174b11ce-ee78-4a67-b5ec-7ab5200079ff}</Project>
       <Name>Quizbuilder</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".quiz">
+      <Visible>False</Visible>
+      <Description>Quiztroller quiz package</Description>
+      <Progid>QZTRLR</Progid>
+      <DefaultIcon>Quiztroller Icon.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

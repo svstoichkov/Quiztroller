@@ -18,7 +18,7 @@
 
                 var table = dataSet.Tables[0];
                 questions.Clear();
-                for (var i = 1; i <= 24; i++)
+                for (var i = 1; i <= 28; i++)
                 {
                     var row = table.Rows[i];
                     var number = row[0].ToString();
@@ -28,16 +28,6 @@
                     var category = row[5].ToString();
                     var alternateQuestion = row[6].ToString();
                     var question = new Question(number, points, category, mainQuestion, answer, alternateQuestion);
-                    questions.Add(question);
-                }
-
-                for (var i = 25; i <= 29; i++)
-                {
-                    var row = table.Rows[i];
-                    var number = row[0].ToString();
-                    var mainQuestion = row[2].ToString();
-                    var answer = row[3].ToString();
-                    var question = new Question(number, "0", " ", mainQuestion, answer, " ");
                     questions.Add(question);
                 }
 
@@ -54,7 +44,7 @@
                 var dataSet = excelReader.AsDataSet();
 
                 var table = dataSet.Tables[0];
-                for (var i = 1; i <= 31; i++)
+                for (var i = 1; i <= 28; i++)
                 {
                     var row = table.Rows[i];
 

@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
@@ -12,7 +11,7 @@
 
     public static class PptxEditor
     {
-        public static string Edit(SpreadsheetParseResult spreadsheet, List<string> round1Image, List<string> round2Images, string pptxPath)
+        public static string Edit(SpreadsheetParseResult spreadsheet, IList<string> round1Images, IList<string> round2Images, string pptxPath)
         {
             var tempFolder = Path.Combine(Path.GetTempPath(), "Quiztroller");
             var newFile = Path.Combine(tempFolder, Path.GetFileName(pptxPath));
@@ -33,8 +32,14 @@
 
             using (var archive = ZipFile.Open(newFile, ZipArchiveMode.Update))
             {
-                //ReplaceMedia(img1Path, img2Path, img3Path, img4Path, archive);
+                ReplaceMedia(round1Images, round2Images, archive);
                 ReplaceQuestions(spreadsheet, archive, tempFolder);
+            }
+
+            var slides = Directory.GetFiles(tempFolder).Where(x => x.Contains("slide"));
+            foreach (var slide in slides)
+            {
+                File.Delete(slide);
             }
 
             return newFile;
@@ -78,36 +83,19 @@
                     if (catIndex > -1)
                     {
                         var categoryNumber = int.Parse(content.Substring(catIndex, content.IndexOf("<", catIndex) - catIndex));
-                        content = content.Replace($"ANSWR_{categoryNumber}", HttpUtility.HtmlEncode(spreadsheet.Answers[categoryNumber - 1]));
+                        string answer = "";
+                        try
+                        {
+                            answer = HttpUtility.HtmlEncode(spreadsheet.Answers[categoryNumber - 1]);
+                        }
+                        catch
+                        {
+                        }
+
+                        content = content.Replace($"ANSWR_{categoryNumber}", answer);
                     }
                 }
 
-
-                //content = content.Replace("%PT%", HttpUtility.HtmlEncode(questions[currentQuestionIndex].Points.ToString()));
-                //content = content.Replace("%ANSWR%", HttpUtility.HtmlEncode(questions[currentQuestionIndex].Answer ?? " "));
-                //
-                //if (slide.FullName.Contains("27"))
-                //{
-                //    var answers = questions[currentQuestionIndex].Answer.Split(new[] { ' ', ',' }, StringSplitOptions.RemoveEmptyEntries);
-                //    for (var i = 0; i < answers.Length; i++)
-                //    {
-                //        content = content.Replace($"%ANSWR{i + 1}%", HttpUtility.HtmlEncode(answers[i]));
-                //    }
-                //    for (var i = 1; i <= 10; i++)
-                //    {
-                //        content = content.Replace($"%ANSWR{i}%", " ");
-                //    }
-                //}
-                //else if (slide.FullName.Contains("28"))
-                //{
-                //    for (var i = 24; i < 29; i++)
-                //    {
-                //        content = content.Replace($"%QSTN{i - 23}%", HttpUtility.HtmlEncode(questions[i].MainQuestion ?? " "));
-                //    }
-                //
-                //    currentQuestionIndex = 28;
-                //}
-                //
                 File.WriteAllText(slidePath, content);
                 
                 slide.Delete();
@@ -115,27 +103,73 @@
             }
         }
 
-        private static void ReplaceAnswer()
+        private static void ReplaceMedia(IList<string> round1Images, IList<string> round2Images, ZipArchive archive)
         {
+            var img1 = archive.Entries.Single(x => x.Length == 9928);
+            var img2 = archive.Entries.Single(x => x.Length == 17738);
+            var img3 = archive.Entries.Single(x => x.Length == 13483);
+            var img4 = archive.Entries.Single(x => x.Length == 13380);
+            var img5 = archive.Entries.Single(x => x.Length == 10562);
+            var img6 = archive.Entries.Single(x => x.Length == 13320);
+            var img7 = archive.Entries.Single(x => x.Length == 11377);
+            var img8 = archive.Entries.Single(x => x.Length == 13146);
+            var img9 = archive.Entries.Single(x => x.Length == 11773);
+            var img10 = archive.Entries.Single(x => x.Length == 13896);
             
-        }
-
-        private static void ReplaceMedia(string img1Path, string img2Path, string img3Path, string img4Path, ZipArchive archive)
-        {
-            var img1 = archive.Entries.FirstOrDefault(x => x.Length == 2585);
-            var img2 = archive.Entries.FirstOrDefault(x => x.Length == 2583);
-            var img3 = archive.Entries.FirstOrDefault(x => x.Length == 2930);
-            var img4 = archive.Entries.FirstOrDefault(x => x.Length == 10242);
+            var img11 = archive.Entries.Single(x => x.Length == 7505);
+            var img12 = archive.Entries.Single(x => x.Length == 5147);
+            var img13 = archive.Entries.Single(x => x.Length == 4899);
+            var img14 = archive.Entries.Single(x => x.Length == 7320);
+            var img15 = archive.Entries.Single(x => x.Length == 11987);
+            var img16 = archive.Entries.Single(x => x.Length == 16761);
+            var img17 = archive.Entries.Single(x => x.Length == 6435);
+            var img18 = archive.Entries.Single(x => x.Length == 4985);
+            var img19 = archive.Entries.Single(x => x.Length == 8045);
+            var img20 = archive.Entries.Single(x => x.Length == 11981);
 
             img1.Delete();
             img2.Delete();
             img3.Delete();
             img4.Delete();
+            img5.Delete();
+            img6.Delete();
+            img7.Delete();
+            img8.Delete();
+            img9.Delete();
+            img10.Delete();
+            
+            img11.Delete();
+            img12.Delete();
+            img13.Delete();
+            img14.Delete();
+            img15.Delete();
+            img16.Delete();
+            img17.Delete();
+            img18.Delete();
+            img19.Delete();
+            img20.Delete();
+            
+            archive.CreateEntryFromFile(round1Images[0], img1.FullName);
+            archive.CreateEntryFromFile(round1Images[1], img2.FullName);
+            archive.CreateEntryFromFile(round1Images[2], img3.FullName);
+            archive.CreateEntryFromFile(round1Images[3], img4.FullName);
+            archive.CreateEntryFromFile(round1Images[4], img5.FullName);
+            archive.CreateEntryFromFile(round1Images[5], img6.FullName);
+            archive.CreateEntryFromFile(round1Images[6], img7.FullName);
+            archive.CreateEntryFromFile(round1Images[7], img8.FullName);
+            archive.CreateEntryFromFile(round1Images[8], img9.FullName);
+            archive.CreateEntryFromFile(round1Images[9], img10.FullName);
 
-            archive.CreateEntryFromFile(img1Path, img1.FullName);
-            archive.CreateEntryFromFile(img2Path, img2.FullName);
-            archive.CreateEntryFromFile(img3Path, img3.FullName);
-            archive.CreateEntryFromFile(img4Path, img4.FullName);
+            archive.CreateEntryFromFile(round2Images[0], img11.FullName);
+            archive.CreateEntryFromFile(round2Images[1], img12.FullName);
+            archive.CreateEntryFromFile(round2Images[2], img13.FullName);
+            archive.CreateEntryFromFile(round2Images[3], img14.FullName);
+            archive.CreateEntryFromFile(round2Images[4], img15.FullName);
+            archive.CreateEntryFromFile(round2Images[5], img16.FullName);
+            archive.CreateEntryFromFile(round2Images[6], img17.FullName);
+            archive.CreateEntryFromFile(round2Images[7], img18.FullName);
+            archive.CreateEntryFromFile(round2Images[8], img19.FullName);
+            archive.CreateEntryFromFile(round2Images[9], img20.FullName);
         }
     }
 }

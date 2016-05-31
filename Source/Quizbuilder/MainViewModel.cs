@@ -1,8 +1,9 @@
 ﻿namespace Quizbuilder
 {
     using System;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.IO;
+    using System.IO.Compression;
     using System.Linq;
     using System.Windows;
     using System.Windows.Input;
@@ -13,6 +14,8 @@
     using Helpers;
 
     using Microsoft.Win32;
+
+    using Newtonsoft.Json;
 
     public class MainViewModel : ViewModelBase
     {
@@ -25,7 +28,7 @@
             this.SelectExcel = new RelayCommand(this.HandleSelectExcel);
             this.SelectSpeedRound1Images = new RelayCommand(this.HandleSelectSpeedRound1Images);
             this.SelectSpeedRound2Images = new RelayCommand(this.HandleSelectSpeedRound2Images);
-            this.Save = new RelayCommand(this.HandleSave);//, this.CanSave);
+            this.Save = new RelayCommand(this.HandleSave, this.CanSave);
 
             this.MoveLeft1 = new RelayCommand<string>(this.HandleMoveLeft1, this.CanMoveLeft1);
             this.MoveLeft2 = new RelayCommand<string>(this.HandleMoveLeft2, this.CanMoveLeft2);
@@ -33,50 +36,6 @@
             this.MoveRight1 = new RelayCommand<string>(this.HandleMoveRight1, this.CanMoveRight1);
             this.MoveRight2 = new RelayCommand<string>(this.HandleMoveRight2, this.CanMoveRight2);
 
-        }
-
-        private bool CanMoveRight2(string arg)
-        {
-            return this.SpeedRound2ImagesPaths.IndexOf(arg) < this.SpeedRound2ImagesPaths.Count - 1;
-        }
-
-        private void HandleMoveRight2(string obj)
-        {
-            var index = this.SpeedRound2ImagesPaths.IndexOf(obj);
-            this.SpeedRound2ImagesPaths.Move(index, index + 1);
-        }
-
-        private bool CanMoveRight1(string arg)
-        {
-            return this.SpeedRound2ImagesPaths.IndexOf(arg) < this.SpeedRound2ImagesPaths.Count - 1;
-        }
-
-        private void HandleMoveRight1(string obj)
-        {
-            var index = this.SpeedRound1ImagesPaths.IndexOf(obj);
-            this.SpeedRound1ImagesPaths.Move(index, index + 1);
-        }
-
-        private bool CanMoveLeft2(string path)
-        {
-            return this.SpeedRound2ImagesPaths.IndexOf(path) > 0;
-        }
-
-        private void HandleMoveLeft2(string path)
-        {
-            var index = this.SpeedRound2ImagesPaths.IndexOf(path);
-            this.SpeedRound2ImagesPaths.Move(index, index - 1);
-        }
-
-        private bool CanMoveLeft1(string path)
-        {
-            return this.SpeedRound1ImagesPaths.IndexOf(path) > 0;
-        }
-
-        private void HandleMoveLeft1(string path)
-        {
-            var index = this.SpeedRound1ImagesPaths.IndexOf(path);
-            this.SpeedRound1ImagesPaths.Move(index, index - 1);
         }
 
         public ICommand SelectPowerpoint { get; }
@@ -138,8 +97,25 @@
             var questions = QuestionsParser.GetQuestions(this.ExcelPath);
             var spreadsheet = QuestionsParser.ParseSpreadsheet(this.ExcelPath);
 
-            //var asd = PptxEditor.Edit(spreadsheet, this.SpeedRound1ImagesPaths, this.SpeedRound2ImagesPaths, this.PowerpointPath);
+            var pptxPath = PptxEditor.Edit(spreadsheet, this.SpeedRound1ImagesPaths, this.SpeedRound2ImagesPaths, this.PowerpointPath);
 
+            var dialog = new SaveFileDialog();
+            dialog.Filter = "Quiz|*.quiz";
+            dialog.Title = "Select a location to save the quiz file";
+            dialog.OverwritePrompt = true;
+            dialog.CheckPathExists = true;
+            dialog.AddExtension = true;
+            dialog.DefaultExt = "quiz";
+            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            var showDialog = dialog.ShowDialog();
+            if (showDialog != null && showDialog.Value)
+            {
+                var fileName = dialog.FileName;
+                var directory = Path.GetDirectoryName(pptxPath);
+                File.WriteAllText(Path.Combine(directory, "questions.txt"), JsonConvert.SerializeObject(questions));
+                ZipFile.CreateFromDirectory(directory, fileName, CompressionLevel.Optimal, false);
+            }
         }
 
         private void HandleSelectSpeedRound2Images()
@@ -215,6 +191,50 @@
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             return dialog;
+        }
+
+        private bool CanMoveRight2(string arg)
+        {
+            return this.SpeedRound2ImagesPaths.IndexOf(arg) < this.SpeedRound2ImagesPaths.Count - 1;
+        }
+
+        private void HandleMoveRight2(string obj)
+        {
+            var index = this.SpeedRound2ImagesPaths.IndexOf(obj);
+            this.SpeedRound2ImagesPaths.Move(index, index + 1);
+        }
+
+        private bool CanMoveRight1(string arg)
+        {
+            return this.SpeedRound1ImagesPaths.IndexOf(arg) < this.SpeedRound1ImagesPaths.Count - 1;
+        }
+
+        private void HandleMoveRight1(string obj)
+        {
+            var index = this.SpeedRound1ImagesPaths.IndexOf(obj);
+            this.SpeedRound1ImagesPaths.Move(index, index + 1);
+        }
+
+        private bool CanMoveLeft2(string path)
+        {
+            return this.SpeedRound2ImagesPaths.IndexOf(path) > 0;
+        }
+
+        private void HandleMoveLeft2(string path)
+        {
+            var index = this.SpeedRound2ImagesPaths.IndexOf(path);
+            this.SpeedRound2ImagesPaths.Move(index, index - 1);
+        }
+
+        private bool CanMoveLeft1(string path)
+        {
+            return this.SpeedRound1ImagesPaths.IndexOf(path) > 0;
+        }
+
+        private void HandleMoveLeft1(string path)
+        {
+            var index = this.SpeedRound1ImagesPaths.IndexOf(path);
+            this.SpeedRound1ImagesPaths.Move(index, index - 1);
         }
     }
 }
