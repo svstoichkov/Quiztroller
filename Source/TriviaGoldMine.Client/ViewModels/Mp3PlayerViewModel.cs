@@ -14,13 +14,13 @@
     {
         private readonly MediaPlayer mediaPlayer = new MediaPlayer();
         private readonly DispatcherTimer timer = new DispatcherTimer();
+        private string currentSong = "Music Player";
 
         private int currentSongIndex;
-        private string currentSong = "Music Player";
-        private bool isPlaying;
-        private bool popUpEnabled;
         private string elapsed = "0:00";
+        private bool isPlaying;
         private string length = "0:00";
+        private bool popUpEnabled;
 
         public Mp3PlayerViewModel()
         {
@@ -131,7 +131,6 @@
             }
 
             this.CurrentSong = this.Songs[this.currentSongIndex];
-
         }
 
         private void HandlePrevious()

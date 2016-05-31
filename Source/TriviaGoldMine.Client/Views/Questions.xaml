@@ -32,12 +32,12 @@
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="№ "
-                                   FontWeight="Bold"/>
+                                   FontWeight="Bold" />
                         <TextBlock Text="{Binding CurrentQuestion.Number}"
                                    Width="30" />
                         <TextBlock Text="Points: "
                                    Margin="20,0,0,0"
-                                   FontWeight="Bold"/>
+                                   FontWeight="Bold" />
                         <TextBlock Text="{Binding CurrentQuestion.Points}"
                                    Width="30" />
                         <TextBlock Text="Category: "

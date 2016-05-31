@@ -1,10 +1,10 @@
 ﻿<Application x:Class="Quiztroller.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             StartupUri="MainWindow.xaml"
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:converters="clr-namespace:Quiztroller.Converters"
-             xmlns:viewModels="clr-namespace:Quiztroller.ViewModels">
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:viewModels="clr-namespace:Quiztroller.ViewModels"
+             Startup="App_OnStartup">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -22,21 +22,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <Style TargetType="{x:Type materialDesign:Card}">
-                <Setter Property="TextOptions.TextFormattingMode"
-                        Value="Ideal" />
-                <Setter Property="TextOptions.TextRenderingMode"
-                        Value="Auto" />
-                <Setter Property="TextOptions.TextHintingMode"
-                        Value="Auto" />
+                <Setter Property="TextOptions.TextFormattingMode" Value="Ideal" />
+                <Setter Property="TextOptions.TextRenderingMode" Value="Auto" />
+                <Setter Property="TextOptions.TextHintingMode" Value="Auto" />
             </Style>
             <Style TargetType="{x:Type TextBlock}">
-                <Setter Property="VerticalAlignment"
-                        Value="Bottom" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
             </Style>
-            <Style TargetType="{x:Type TextBox}"
-                   BasedOn="{StaticResource MaterialDesignTextBox}">
-                <Setter Property="VerticalContentAlignment"
-                        Value="Bottom" />
+            <Style BasedOn="{StaticResource MaterialDesignTextBox}" TargetType="{x:Type TextBox}">
+                <Setter Property="VerticalContentAlignment" Value="Bottom" />
             </Style>
             <viewModels:ViewModelLocator x:Key="ViewModelLocator" />
             <converters:PathToFileNameConverter x:Key="PathToFileNameConverter" />

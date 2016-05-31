@@ -6,7 +6,10 @@
     {
         public ViewModelLocator()
         {
-            this.Register();
+            if (Container == null)
+            {
+                Register();
+            }
         }
 
         public static IContainer Container { get; private set; }
@@ -23,10 +26,10 @@
 
         public LoginViewModel LoginViewModel => Container.Resolve<LoginViewModel>();
 
-        private void Register()
+        public static void Register()
         {
             var containerBuilder = new ContainerBuilder();
-            
+
             containerBuilder.RegisterType<MainViewModel>().SingleInstance();
             containerBuilder.RegisterType<Mp3PlayerViewModel>().SingleInstance();
             containerBuilder.RegisterType<PowerPointControllerViewModel>().SingleInstance();

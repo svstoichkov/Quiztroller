@@ -1,6 +1,5 @@
-﻿namespace Quizbuilder.Helpers
+﻿namespace TriviaGoldMine.Helpers.Helpers
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.IO.Compression;
@@ -13,7 +12,7 @@
     {
         public static string Edit(SpreadsheetParseResult spreadsheet, IList<string> round1Images, IList<string> round2Images, string pptxPath)
         {
-            var tempFolder = Path.Combine(Path.GetTempPath(), "Quiztroller");
+            var tempFolder = Path.Combine(Path.GetTempPath(), "Quizbuilder");
             var newFile = Path.Combine(tempFolder, Path.GetFileName(pptxPath));
 
             if (Directory.Exists(tempFolder))
@@ -49,7 +48,7 @@
         {
             var slides = archive.Entries.Where(x => x.FullName.StartsWith("ppt/slides/") && x.FullName.EndsWith(".xml"));
             slides = slides.OrderBy(x => int.Parse(x.FullName.Substring(x.FullName.LastIndexOf('e') + 1, x.FullName.IndexOf('.') - x.FullName.LastIndexOf('e') - 1))).ToList();
-            
+
             foreach (var slide in slides)
             {
                 var slidePath = Path.Combine(tempFolder, Path.GetFileName(slide.FullName));
@@ -83,7 +82,7 @@
                     if (catIndex > -1)
                     {
                         var categoryNumber = int.Parse(content.Substring(catIndex, content.IndexOf("<", catIndex) - catIndex));
-                        string answer = "";
+                        var answer = "";
                         try
                         {
                             answer = HttpUtility.HtmlEncode(spreadsheet.Answers[categoryNumber - 1]);
@@ -97,7 +96,7 @@
                 }
 
                 File.WriteAllText(slidePath, content);
-                
+
                 slide.Delete();
                 archive.CreateEntryFromFile(slidePath, slide.FullName);
             }
@@ -115,7 +114,7 @@
             var img8 = archive.Entries.Single(x => x.Length == 13146);
             var img9 = archive.Entries.Single(x => x.Length == 11773);
             var img10 = archive.Entries.Single(x => x.Length == 13896);
-            
+
             var img11 = archive.Entries.Single(x => x.Length == 7505);
             var img12 = archive.Entries.Single(x => x.Length == 5147);
             var img13 = archive.Entries.Single(x => x.Length == 4899);
@@ -137,7 +136,7 @@
             img8.Delete();
             img9.Delete();
             img10.Delete();
-            
+
             img11.Delete();
             img12.Delete();
             img13.Delete();
@@ -148,7 +147,7 @@
             img18.Delete();
             img19.Delete();
             img20.Delete();
-            
+
             archive.CreateEntryFromFile(round1Images[0], img1.FullName);
             archive.CreateEntryFromFile(round1Images[1], img2.FullName);
             archive.CreateEntryFromFile(round1Images[2], img3.FullName);

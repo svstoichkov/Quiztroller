@@ -1,4 +1,4 @@
-﻿namespace Quizbuilder.Models
+﻿namespace TriviaGoldMine.Helpers.Models
 {
     using System.Collections.Generic;
 

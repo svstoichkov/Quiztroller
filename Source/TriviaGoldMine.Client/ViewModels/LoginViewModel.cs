@@ -12,10 +12,10 @@
 
     public class LoginViewModel : ViewModelBase
     {
-        private int zIndex = 1000;
-        private Visibility loginVisibility = Visibility.Visible;
         private string errorMessage;
+        private Visibility loginVisibility = Visibility.Visible;
         private string password = Settings.Default.Password;
+        private int zIndex = 1000;
 
         public LoginViewModel()
         {
@@ -77,7 +77,7 @@
                 this.Set(() => this.ErrorMessage, ref this.errorMessage, value);
             }
         }
-        
+
         private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(this.Email) && !string.IsNullOrWhiteSpace(this.Password);

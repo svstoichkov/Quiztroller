@@ -1,4 +1,4 @@
-﻿namespace Quizbuilder
+﻿namespace TriviaGoldMine.Helpers.Models
 {
     public class Question
     {

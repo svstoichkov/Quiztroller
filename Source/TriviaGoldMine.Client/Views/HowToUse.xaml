@@ -9,42 +9,41 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <materialDesign:ColorZone Mode="Accent"
-                                  Padding="8"
-                                  Grid.Row="0">
-            <TextBlock Text="How to Use"
-                       TextWrapping="WrapWithOverflow"
-                       HorizontalAlignment="Center" />
+        <materialDesign:ColorZone Grid.Row="0"
+                                  Mode="Accent"
+                                  Padding="8">
+            <TextBlock HorizontalAlignment="Center"
+                       Text="How to Use"
+                       TextWrapping="WrapWithOverflow" />
         </materialDesign:ColorZone>
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          Grid.Row="0">
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
                 <StackPanel Margin="20">
-                    <TextBlock TextWrapping="WrapWithOverflow">1. Click on the button in the upper right corner saying "Questions".</TextBlock>
+                    <TextBlock TextWrapping="WrapWithOverflow">1. Click on the button in the upper right corner saying &quot;Questions&quot;.</TextBlock>
                     <Separator Margin="0,20,0,20" />
-                    <TextBlock TextWrapping="WrapWithOverflow">2. Drag and drop an excel file in the "Questions" section.</TextBlock>
+                    <TextBlock TextWrapping="WrapWithOverflow">2. Drag and drop a .qz package file in the &quot;Questions&quot; section.</TextBlock>
                     <Separator Margin="0,20,0,20" />
-                    <TextBlock TextWrapping="WrapWithOverflow">3. Drag and drop one or more .mp3 files in the "Music Player" section.</TextBlock>
+                    <TextBlock TextWrapping="WrapWithOverflow">3. Drag and drop one or more .mp3 files in the &quot;Music Player&quot; section.</TextBlock>
                     <Separator Margin="0,20,0,20" />
-                    <TextBlock TextWrapping="WrapWithOverflow">4. Start the PowerPoint presentation.</TextBlock>
-                    <Separator Margin="0,20,0,20" />
-                    <TextBlock TextWrapping="WrapWithOverflow">5. Use the button with magnifying glass icon in "2nd Screen Controller" section to find a running instance of PowerPoint.</TextBlock>
+                    <TextBlock TextWrapping="WrapWithOverflow">4. Use the button with magnifying glass icon in &quot;2nd Screen Controller&quot; section to find a running instance of PowerPoint.</TextBlock>
                     <Separator Margin="0,20,0,20" />
                 </StackPanel>
             </ScrollViewer>
-            <CheckBox Checked="ToggleButton_OnChecked"
+            <CheckBox x:Name="checkBox"
                       Grid.Row="1"
-                      x:Name="checkBox"
-                      Unchecked="ToggleButton_OnUnchecked"
-                      HorizontalAlignment="Right"
-                      FontWeight="Bold"
                       Margin="0,0,30,20"
+                      HorizontalAlignment="Right"
                       VerticalAlignment="Center"
-                      VerticalContentAlignment="Center">Do not show again</CheckBox>
+                      VerticalContentAlignment="Center"
+                      Checked="ToggleButton_OnChecked"
+                      FontWeight="Bold"
+                      Unchecked="ToggleButton_OnUnchecked">
+                Do not show again
+            </CheckBox>
         </Grid>
     </Grid>
 </materialDesign:Card>

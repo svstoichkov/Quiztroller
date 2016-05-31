@@ -54,8 +54,8 @@
             <Label Content="{Binding ErrorMessage}"
                    Grid.Row="2"
                    Grid.Column="1"
-                   Margin="10,10,0,0" 
-                   Foreground="Red"/>
+                   Margin="10,10,0,0"
+                   Foreground="Red" />
             <Button Grid.Column="1"
                     Grid.Row="3"
                     Margin="10,10,0,0"

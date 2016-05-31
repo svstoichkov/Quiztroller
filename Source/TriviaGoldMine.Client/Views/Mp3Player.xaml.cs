@@ -36,7 +36,7 @@
                     filenames = Directory.GetFiles(filenames.First());
                 }
 
-                foreach (string filename in filenames)
+                foreach (var filename in filenames)
                 {
                     if (Path.GetExtension(filename)?.ToLower() != ".mp3")
                     {

@@ -11,11 +11,11 @@ namespace Quiztroller.ViewModels
 
     public class MainViewModel : ViewModelBase
     {
-        private string switcherContent = "Scoreboard";
+        private readonly object howToUse = new HowToUse();
         private readonly object questions = new Questions();
         private readonly object scoreboard = new Scoreboard();
-        private readonly object howToUse = new HowToUse();
         private object currentContent;
+        private string switcherContent = "Scoreboard";
 
         public MainViewModel()
         {
@@ -33,7 +33,6 @@ namespace Quiztroller.ViewModels
         public ICommand Switch { get; set; }
 
         public ICommand HowToUse { get; set; }
-
 
         public string SwitcherContent
         {

@@ -5,23 +5,13 @@
                      xmlns:viewModels="clr-namespace:Quiztroller.ViewModels"
                      x:Name="powerPoint"
                      AllowDrop="True"
-                     Drop="PowerPoint_OnDrop"
-                     DragOver="PowerPoint_OnDragOver"
-                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=PowerPointControllerViewModel}">
+                     DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                           Path=PowerPointControllerViewModel}">
     <StackPanel Orientation="Vertical">
-        <materialDesign:ColorZone Mode="Accent"
-                                  Padding="8">
-            <TextBlock Text="2nd Screen Controller"
-                       HorizontalAlignment="Center" />
+        <materialDesign:ColorZone Mode="Accent" Padding="8">
+            <TextBlock HorizontalAlignment="Center" Text="2nd Screen Controller" />
         </materialDesign:ColorZone>
         <Grid>
-            <Grid Background="{DynamicResource MaterialDesignPaper}"
-                  ZIndex="1000"
-                  Visibility="{Binding Visibility}">
-                <TextBlock Text="{Binding WhatToDo}"
-                           HorizontalAlignment="Center" Foreground="Black"
-                           VerticalAlignment="Center"/>
-            </Grid>
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*" />
@@ -29,38 +19,38 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                <Button Grid.Column="0"
                         Command="{Binding FindPowerPoint}"
                         Padding="0"
-                        Grid.Column="0">
-                    <materialDesign:PackIcon Kind="Magnify"
-                                             Width="24"
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                    <materialDesign:PackIcon Width="24"
                                              Height="24"
+                                             Kind="Magnify"
                                              ToolTip="asd" />
                 </Button>
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                <Button Grid.Column="1"
                         Command="{Binding ShowSlideshow}"
                         Padding="0"
-                        Grid.Column="1">
-                    <materialDesign:PackIcon Kind="ProjectorScreen"
-                                             Width="24"
-                                             Height="24" />
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                    <materialDesign:PackIcon Width="24"
+                                             Height="24"
+                                             Kind="ProjectorScreen" />
                 </Button>
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                <Button Grid.Column="2"
                         Command="{Binding Previous}"
                         Padding="0"
-                        Grid.Column="2">
-                    <materialDesign:PackIcon Kind="ArrowLeftBoldCircleOutline"
-                                             Width="24"
-                                             Height="24" />
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                    <materialDesign:PackIcon Width="24"
+                                             Height="24"
+                                             Kind="ArrowLeftBoldCircleOutline" />
                 </Button>
-                <Button Style="{StaticResource MaterialDesignFlatButton}"
+                <Button Grid.Column="3"
                         Command="{Binding Next}"
                         Padding="0"
-                        Grid.Column="3">
-                    <materialDesign:PackIcon Kind="ArrowRightBoldCircleOutline"
-                                             Width="24"
-                                             Height="24" />
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                    <materialDesign:PackIcon Width="24"
+                                             Height="24"
+                                             Kind="ArrowRightBoldCircleOutline" />
                 </Button>
             </Grid>
         </Grid>

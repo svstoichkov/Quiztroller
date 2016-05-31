@@ -16,7 +16,7 @@
 
         public ScoreboardViewModel()
         {
-            for (int i = 0; i < 25; i++)
+            for (var i = 0; i < 25; i++)
             {
                 var team = new Team();
                 team.PropertyChanged += this.OnPropertyChanged;
@@ -28,6 +28,10 @@
             //this.timer.Start();;
         }
 
+        public ObservableCollection<Team> Teams { get; set; } = new ObservableCollection<Team>();
+
+        public ObservableCollection<Team> Top3 { get; set; } = new ObservableCollection<Team>();
+
         private void OnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var top3 = this.Teams.Where(x => x.Score > 0).OrderByDescending(x => x.Score).Take(3);
@@ -38,10 +42,6 @@
             }
         }
 
-        public ObservableCollection<Team> Teams { get; set; } = new ObservableCollection<Team>();
-
-        public ObservableCollection<Team> Top3 { get; set; } = new ObservableCollection<Team>();
-        
         private void OnTick(object sender, EventArgs e)
         {
             var top3 = this.Teams.OrderByDescending(x => x.Score).Take(3);

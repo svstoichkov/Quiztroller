@@ -26,8 +26,8 @@
             <views:ScoreboardDataGrid Grid.Row="0"
                                       DataContext="{Binding Top3}" />
             <Separator Grid.Row="1"
-                       Margin="20" 
-                       Height="5"/>
+                       Margin="20"
+                       Height="5" />
             <views:ScoreboardDataGrid Grid.Row="2"
                                       DataContext="{Binding Teams}" />
         </Grid>

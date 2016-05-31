@@ -10,23 +10,26 @@
         public static Task<string> Authenticate(string email, string password)
         {
             return Task.Run(() =>
-            {
-                var driverService = PhantomJSDriverService.CreateDefaultService();
-                driverService.HideCommandPromptWindow = true;
+                            {
+                                var driverService = PhantomJSDriverService.CreateDefaultService();
+                                driverService.HideCommandPromptWindow = true;
 
-                var browser = new PhantomJSDriver(driverService);
-                browser.Navigate().GoToUrl("http://www.triviagoldmine2.com/wp-login.php");
+                                var browser = new PhantomJSDriver(driverService);
+                                browser.Navigate().GoToUrl("http://www.triviagoldmine2.com/wp-login.php");
 
-                browser.FindElement(By.Id("user_login")).SendKeys(email);
-                browser.FindElement(By.Id("user_pass")).SendKeys(password);
-                browser.FindElement(By.Id("wp-submit")).Click();
+                                browser.FindElement(By.Id("user_login")).SendKeys(email);
+                                browser.FindElement(By.Id("user_pass")).SendKeys(password);
+                                browser.FindElement(By.Id("wp-submit")).Click();
 
-                browser.Navigate().GoToUrl($"http://www.triviagoldmine2.com/?username={email}&password={password}");
-                var source = browser.PageSource;
-                var response = source.Substring(25, source.Length - 14 - 25);
+                                browser.Navigate().GoToUrl($"http://www.triviagoldmine2.com/?username={email}&password={password}");
+                                var source = browser.PageSource;
+                                var response = source.Substring(25, source.Length - 14 - 25);
 
-                return response;
-            });
+                                driverService.Dispose();
+                                browser.Quit();
+
+                                return response;
+                            });
         }
     }
 }

@@ -11,11 +11,11 @@
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
 
-    using Helpers;
-
     using Microsoft.Win32;
 
     using Newtonsoft.Json;
+
+    using TriviaGoldMine.Helpers.Helpers;
 
     public class MainViewModel : ViewModelBase
     {
@@ -35,7 +35,6 @@
 
             this.MoveRight1 = new RelayCommand<string>(this.HandleMoveRight1, this.CanMoveRight1);
             this.MoveRight2 = new RelayCommand<string>(this.HandleMoveRight2, this.CanMoveRight2);
-
         }
 
         public ICommand SelectPowerpoint { get; }
@@ -94,27 +93,39 @@
 
         private void HandleSave()
         {
-            var questions = QuestionsParser.GetQuestions(this.ExcelPath);
-            var spreadsheet = QuestionsParser.ParseSpreadsheet(this.ExcelPath);
-
-            var pptxPath = PptxEditor.Edit(spreadsheet, this.SpeedRound1ImagesPaths, this.SpeedRound2ImagesPaths, this.PowerpointPath);
-
-            var dialog = new SaveFileDialog();
-            dialog.Filter = "Quiz|*.quiz";
-            dialog.Title = "Select a location to save the quiz file";
-            dialog.OverwritePrompt = true;
-            dialog.CheckPathExists = true;
-            dialog.AddExtension = true;
-            dialog.DefaultExt = "quiz";
-            dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-
-            var showDialog = dialog.ShowDialog();
-            if (showDialog != null && showDialog.Value)
+            try
             {
-                var fileName = dialog.FileName;
-                var directory = Path.GetDirectoryName(pptxPath);
-                File.WriteAllText(Path.Combine(directory, "questions.txt"), JsonConvert.SerializeObject(questions));
-                ZipFile.CreateFromDirectory(directory, fileName, CompressionLevel.Optimal, false);
+                var questions = QuestionsParser.GetQuestions(this.ExcelPath);
+                var spreadsheet = QuestionsParser.ParseSpreadsheet(this.ExcelPath);
+
+                var pptxPath = PptxEditor.Edit(spreadsheet, this.SpeedRound1ImagesPaths, this.SpeedRound2ImagesPaths, this.PowerpointPath);
+
+                var dialog = new SaveFileDialog();
+                dialog.Filter = "Quiz|*.qz";
+                dialog.Title = "Select a location to save the quiz file";
+                dialog.OverwritePrompt = true;
+                dialog.CheckPathExists = true;
+                dialog.AddExtension = true;
+                dialog.DefaultExt = "qz";
+                dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+                var showDialog = dialog.ShowDialog();
+                if (showDialog != null && showDialog.Value)
+                {
+                    var fileName = dialog.FileName;
+                    var directory = Path.GetDirectoryName(pptxPath);
+                    File.WriteAllText(Path.Combine(directory, "questions.txt"), JsonConvert.SerializeObject(questions));
+                    ZipFile.CreateFromDirectory(directory, fileName, CompressionLevel.Optimal, false);
+
+                }
+            }
+            catch (IOException ex)
+            {
+                MessageBox.Show("The excel file is currently open", "File is in use", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Package cannot be created due to unknown error. Please check the excel and powerpoint files", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

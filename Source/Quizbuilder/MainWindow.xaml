@@ -91,10 +91,11 @@
                             <StackPanel Grid.Row="1"
                                         HorizontalAlignment="Center"
                                         Orientation="Horizontal">
-                                <Button Command="{Binding ElementName=window,
+                                <Button
+                                    Command="{Binding ElementName=window,
                                                           Path=DataContext.MoveLeft1}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
                                     <materialDesign:PackIcon Kind="ArrowLeft" />
                                 </Button>
                                 <Button Margin="10,0,0,0"
@@ -143,10 +144,11 @@
                             <StackPanel Grid.Row="1"
                                         HorizontalAlignment="Center"
                                         Orientation="Horizontal">
-                                <Button Command="{Binding ElementName=window,
+                                <Button
+                                    Command="{Binding ElementName=window,
                                                           Path=DataContext.MoveLeft2}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                    CommandParameter="{Binding}"
+                                    Style="{StaticResource MaterialDesignFlatButton}">
                                     <materialDesign:PackIcon Kind="ArrowLeft" />
                                 </Button>
                                 <Button Margin="10,0,0,0"
