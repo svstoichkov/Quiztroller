@@ -2,6 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
 
     using GalaSoft.MvvmLight;
@@ -15,8 +18,6 @@
     {
         private string excelPath;
         private string powerpointPath;
-        private List<string> speedRound1ImagesPaths;
-        private List<string> speedRound2ImagesPaths;
 
         public MainViewModel()
         {
@@ -25,6 +26,57 @@
             this.SelectSpeedRound1Images = new RelayCommand(this.HandleSelectSpeedRound1Images);
             this.SelectSpeedRound2Images = new RelayCommand(this.HandleSelectSpeedRound2Images);
             this.Save = new RelayCommand(this.HandleSave);//, this.CanSave);
+
+            this.MoveLeft1 = new RelayCommand<string>(this.HandleMoveLeft1, this.CanMoveLeft1);
+            this.MoveLeft2 = new RelayCommand<string>(this.HandleMoveLeft2, this.CanMoveLeft2);
+
+            this.MoveRight1 = new RelayCommand<string>(this.HandleMoveRight1, this.CanMoveRight1);
+            this.MoveRight2 = new RelayCommand<string>(this.HandleMoveRight2, this.CanMoveRight2);
+
+        }
+
+        private bool CanMoveRight2(string arg)
+        {
+            return this.SpeedRound2ImagesPaths.IndexOf(arg) < this.SpeedRound2ImagesPaths.Count - 1;
+        }
+
+        private void HandleMoveRight2(string obj)
+        {
+            var index = this.SpeedRound2ImagesPaths.IndexOf(obj);
+            this.SpeedRound2ImagesPaths.Move(index, index + 1);
+        }
+
+        private bool CanMoveRight1(string arg)
+        {
+            return this.SpeedRound2ImagesPaths.IndexOf(arg) < this.SpeedRound2ImagesPaths.Count - 1;
+        }
+
+        private void HandleMoveRight1(string obj)
+        {
+            var index = this.SpeedRound1ImagesPaths.IndexOf(obj);
+            this.SpeedRound1ImagesPaths.Move(index, index + 1);
+        }
+
+        private bool CanMoveLeft2(string path)
+        {
+            return this.SpeedRound2ImagesPaths.IndexOf(path) > 0;
+        }
+
+        private void HandleMoveLeft2(string path)
+        {
+            var index = this.SpeedRound2ImagesPaths.IndexOf(path);
+            this.SpeedRound2ImagesPaths.Move(index, index - 1);
+        }
+
+        private bool CanMoveLeft1(string path)
+        {
+            return this.SpeedRound1ImagesPaths.IndexOf(path) > 0;
+        }
+
+        private void HandleMoveLeft1(string path)
+        {
+            var index = this.SpeedRound1ImagesPaths.IndexOf(path);
+            this.SpeedRound1ImagesPaths.Move(index, index - 1);
         }
 
         public ICommand SelectPowerpoint { get; }
@@ -36,6 +88,14 @@
         public ICommand SelectSpeedRound2Images { get; }
 
         public ICommand Save { get; }
+
+        public ICommand MoveLeft1 { get; set; }
+
+        public ICommand MoveLeft2 { get; set; }
+
+        public ICommand MoveRight1 { get; set; }
+
+        public ICommand MoveRight2 { get; set; }
 
         public string PowerpointPath
         {
@@ -61,29 +121,9 @@
             }
         }
 
-        public List<string> SpeedRound1ImagesPaths
-        {
-            get
-            {
-                return this.speedRound1ImagesPaths;
-            }
-            set
-            {
-                this.Set(() => this.SpeedRound1ImagesPaths, ref this.speedRound1ImagesPaths, value);
-            }
-        }
+        public ObservableCollection<string> SpeedRound1ImagesPaths { get; } = new ObservableCollection<string>();
 
-        public List<string> SpeedRound2ImagesPaths
-        {
-            get
-            {
-                return this.speedRound2ImagesPaths;
-            }
-            set
-            {
-                this.Set(() => this.SpeedRound2ImagesPaths, ref this.speedRound2ImagesPaths, value);
-            }
-        }
+        public ObservableCollection<string> SpeedRound2ImagesPaths { get; } = new ObservableCollection<string>();
 
         private bool CanSave()
         {
@@ -98,7 +138,7 @@
             var questions = QuestionsParser.GetQuestions(this.ExcelPath);
             var spreadsheet = QuestionsParser.ParseSpreadsheet(this.ExcelPath);
 
-            var asd = PptxEditor.Edit(spreadsheet, this.SpeedRound1ImagesPaths, this.SpeedRound2ImagesPaths, this.PowerpointPath);
+            //var asd = PptxEditor.Edit(spreadsheet, this.SpeedRound1ImagesPaths, this.SpeedRound2ImagesPaths, this.PowerpointPath);
 
         }
 
@@ -108,8 +148,18 @@
             var showDialog = dialog.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
-                this.SpeedRound2ImagesPaths.Clear();
-                this.SpeedRound2ImagesPaths.AddRange(dialog.FileNames);
+                if (dialog.FileNames.Count() != 10)
+                {
+                    MessageBox.Show("Image count must be 10", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    this.SpeedRound2ImagesPaths.Clear();
+                    foreach (var fileName in dialog.FileNames)
+                    {
+                        this.SpeedRound2ImagesPaths.Add(fileName);
+                    }
+                }
             }
         }
 
@@ -119,8 +169,18 @@
             var showDialog = dialog.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
-                this.SpeedRound1ImagesPaths.Clear();
-                this.SpeedRound1ImagesPaths.AddRange(dialog.FileNames);
+                if (dialog.FileNames.Count() != 10)
+                {
+                    MessageBox.Show("Image count must be 10", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else
+                {
+                    this.SpeedRound1ImagesPaths.Clear();
+                    foreach (var fileName in dialog.FileNames)
+                    {
+                        this.SpeedRound1ImagesPaths.Add(fileName);
+                    }
+                }
             }
         }
 

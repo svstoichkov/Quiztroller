@@ -2,10 +2,11 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:quizbuilder="clr-namespace:Quizbuilder"
+        x:Name="window"
         Title="Quizbuilder"
-        Width="500"
-        Height="400"
-        ResizeMode="CanMinimize">
+        Width="800"
+        Height="600"
+        WindowState="Maximized">
     <Window.DataContext>
         <quizbuilder:MainViewModel />
     </Window.DataContext>
@@ -55,10 +56,40 @@
                    Grid.Column="0"
                    Margin="0,10,0,0"
                    Text="Speed round 1 images" />
-        <TextBox Grid.Row="5"
-                 Grid.Column="0"
-                 IsReadOnly="True"
-                 Text="{Binding SpeedRound1ImagesPaths}" />
+        <ItemsControl Grid.Row="5"
+                      Grid.Column="0"
+                      ItemsSource="{Binding SpeedRound1ImagesPaths}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0"
+                               Width="80"
+                               Height="80"
+                               Source="{Binding}" />
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Button Command="{Binding ElementName=window,
+                                                      Path=DataContext.MoveLeft1}"
+                                    CommandParameter="{Binding}"
+                                    Content="&lt;-" />
+                            <Button Margin="10,0,0,0"
+                                    Command="{Binding ElementName=window,
+                                                      Path=DataContext.MoveRight1}"
+                                    CommandParameter="{Binding}"
+                                    Content="-&gt;" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Button Grid.Row="5"
                 Grid.Column="1"
                 Margin="10,0,0,0"
@@ -68,10 +99,40 @@
                    Grid.Column="0"
                    Margin="0,10,0,0"
                    Text="Speed round 2 images" />
-        <TextBox Grid.Row="7"
-                 Grid.Column="0"
-                 IsReadOnly="True"
-                 Text="{Binding SpeedRound2ImagesPaths}" />
+        <ItemsControl Grid.Row="7"
+                      Grid.Column="0"
+                      ItemsSource="{Binding SpeedRound2ImagesPaths}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid Margin="0,0,20,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image Grid.Row="0"
+                               Width="80"
+                               Height="80"
+                               Source="{Binding}" />
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Button Command="{Binding ElementName=window,
+                                                      Path=DataContext.MoveLeft2}"
+                                    CommandParameter="{Binding}"
+                                    Content="&lt;-" />
+                            <Button Margin="10,0,0,0"
+                                    Command="{Binding ElementName=window,
+                                                      Path=DataContext.MoveRight2}"
+                                    CommandParameter="{Binding}"
+                                    Content="-&gt;" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
         <Button Grid.Row="7"
                 Grid.Column="1"
                 Margin="10,0,0,0"
