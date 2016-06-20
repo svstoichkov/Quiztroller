@@ -1,6 +1,7 @@
 ﻿<Window x:Class="Quizbuilder.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:quizbuilder="clr-namespace:Quizbuilder"
         x:Name="window"
@@ -16,158 +17,220 @@
     <Window.DataContext>
         <quizbuilder:MainViewModel />
     </Window.DataContext>
-    <Grid Margin="20">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="150" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"
-                   Grid.Column="0"
-                   Text="Powerpoint template" />
-        <TextBox Grid.Row="1"
-                 Grid.Column="0"
-                 IsReadOnly="True"
-                 Text="{Binding PowerpointPath}" />
-        <Button Grid.Row="1"
-                Grid.Column="1"
-                Margin="10,0,0,0"
-                Command="{Binding SelectPowerpoint}"
-                Content="Select file" />
-        <TextBlock Grid.Row="2"
-                   Grid.Column="0"
-                   Margin="0,10,0,0"
-                   Text="Excel file" />
-        <TextBox Grid.Row="3"
-                 Grid.Column="0"
-                 IsReadOnly="True"
-                 Text="{Binding ExcelPath}" />
-        <Button Grid.Row="3"
-                Grid.Column="1"
-                Margin="10,0,0,0"
-                Command="{Binding SelectExcel}"
-                Content="Select file" />
-        <StackPanel Grid.Row="4"
-                    Grid.Column="0"
-                    Orientation="Horizontal">
-            <TextBlock Margin="0,10,0,0" Text="Speed round 1 images" />
-            <Button Margin="10,10,0,0"
-                    Command="{Binding SelectSpeedRound1Images}"
-                    Content="Select files" />
-        </StackPanel>
-        <ScrollViewer Grid.Row="5"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="2"
-                      Margin="0,20,0,0"
-                      VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding SpeedRound1ImagesPaths}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,0,20,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Image Grid.Row="0"
-                                   Width="80"
-                                   Height="80"
-                                   Source="{Binding}" />
-                            <StackPanel Grid.Row="1"
-                                        HorizontalAlignment="Center"
-                                        Orientation="Horizontal">
-                                <Button
-                                    Command="{Binding ElementName=window,
-                                                          Path=DataContext.MoveLeft1}"
-                                    CommandParameter="{Binding}"
-                                    Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon Kind="ArrowLeft" />
-                                </Button>
-                                <Button Margin="10,0,0,0"
-                                        Command="{Binding ElementName=window,
-                                                          Path=DataContext.MoveRight1}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon Kind="ArrowRight" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        <StackPanel Grid.Row="6"
-                    Grid.Column="0"
-                    Orientation="Horizontal">
-            <TextBlock Margin="0,10,0,0" Text="Speed round 2 images" />
-            <Button Margin="10,10,0,0"
-                    Command="{Binding SelectSpeedRound2Images}"
-                    Content="Select files" />
-        </StackPanel>
-        <ScrollViewer Grid.Row="7"
-                      Grid.Column="0"
-                      Grid.ColumnSpan="2"
-                      Margin="0,20,0,0"
-                      VerticalScrollBarVisibility="Auto">
-            <ItemsControl ItemsSource="{Binding SpeedRound2ImagesPaths}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,0,20,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-                            <Image Grid.Row="0"
-                                   Width="80"
-                                   Height="80"
-                                   Source="{Binding}" />
-                            <StackPanel Grid.Row="1"
-                                        HorizontalAlignment="Center"
-                                        Orientation="Horizontal">
-                                <Button
-                                    Command="{Binding ElementName=window,
-                                                          Path=DataContext.MoveLeft2}"
-                                    CommandParameter="{Binding}"
-                                    Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon Kind="ArrowLeft" />
-                                </Button>
-                                <Button Margin="10,0,0,0"
-                                        Command="{Binding ElementName=window,
-                                                          Path=DataContext.MoveRight2}"
-                                        CommandParameter="{Binding}"
-                                        Style="{StaticResource MaterialDesignFlatButton}">
-                                    <materialDesign:PackIcon Kind="ArrowRight" />
-                                </Button>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        <Button Grid.Row="9"
-                Grid.Column="1"
-                VerticalAlignment="Bottom"
-                Command="{Binding Save}"
-                Content="Save" />
-    </Grid>
+    <dragablz:TabablzControl x:Name="dragablz">
+        <TabItem Header="Create">
+            <Grid Margin="20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="150" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0"
+                           Grid.Column="0"
+                           Text="Powerpoint template" />
+                <TextBox Grid.Row="1"
+                         Grid.Column="0"
+                         IsReadOnly="True"
+                         Text="{Binding PowerpointPath}" />
+                <Button Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        Command="{Binding SelectPowerpoint}"
+                        Content="Select file" />
+                <TextBlock Grid.Row="2"
+                           Grid.Column="0"
+                           Margin="0,10,0,0"
+                           Text="Excel file" />
+                <TextBox Grid.Row="3"
+                         Grid.Column="0"
+                         IsReadOnly="True"
+                         Text="{Binding ExcelPath}" />
+                <Button Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="10,0,0,0"
+                        Command="{Binding SelectExcel}"
+                        Content="Select file" />
+                <StackPanel Grid.Row="4"
+                            Grid.Column="0"
+                            Orientation="Horizontal">
+                    <TextBlock Margin="0,10,0,0" Text="Speed round 1 images" />
+                    <Button Margin="10,10,0,0"
+                            Command="{Binding SelectSpeedRound1Images}"
+                            Content="Select files" />
+                </StackPanel>
+                <ScrollViewer Grid.Row="5"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Margin="0,20,0,0"
+                              VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding SpeedRound1ImagesPaths}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,20,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Row="0"
+                                           Width="80"
+                                           Height="80"
+                                           Source="{Binding}" />
+                                    <StackPanel Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                Orientation="Horizontal">
+                                        <Button Command="{Binding ElementName=window,
+                                                                  Path=DataContext.MoveLeft1}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource MaterialDesignFlatButton}">
+                                            <materialDesign:PackIcon Kind="ArrowLeft" />
+                                        </Button>
+                                        <Button Margin="10,0,0,0"
+                                                Command="{Binding ElementName=window,
+                                                                  Path=DataContext.MoveRight1}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource MaterialDesignFlatButton}">
+                                            <materialDesign:PackIcon Kind="ArrowRight" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <StackPanel Grid.Row="6"
+                            Grid.Column="0"
+                            Orientation="Horizontal">
+                    <TextBlock Margin="0,10,0,0" Text="Speed round 2 images" />
+                    <Button Margin="10,10,0,0"
+                            Command="{Binding SelectSpeedRound2Images}"
+                            Content="Select files" />
+                </StackPanel>
+                <ScrollViewer Grid.Row="7"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="2"
+                              Margin="0,20,0,0"
+                              VerticalScrollBarVisibility="Auto">
+                    <ItemsControl ItemsSource="{Binding SpeedRound2ImagesPaths}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,20,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Row="0"
+                                           Width="80"
+                                           Height="80"
+                                           Source="{Binding}" />
+                                    <StackPanel Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                Orientation="Horizontal">
+                                        <Button Command="{Binding ElementName=window,
+                                                                  Path=DataContext.MoveLeft2}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource MaterialDesignFlatButton}">
+                                            <materialDesign:PackIcon Kind="ArrowLeft" />
+                                        </Button>
+                                        <Button Margin="10,0,0,0"
+                                                Command="{Binding ElementName=window,
+                                                                  Path=DataContext.MoveRight2}"
+                                                CommandParameter="{Binding}"
+                                                Style="{StaticResource MaterialDesignFlatButton}">
+                                            <materialDesign:PackIcon Kind="ArrowRight" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+                <Button Grid.Row="9"
+                        Grid.Column="1"
+                        VerticalAlignment="Bottom"
+                        Command="{Binding Save}"
+                        Content="Save" />
+            </Grid>
+        </TabItem>
+        <TabItem x:Name="manage" Header="Manage">
+            <TabItem.DataContext>
+                <quizbuilder:ManagePackagesViewModel />
+            </TabItem.DataContext>
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0"
+                      Grid.RowSpan="2"
+                      Background="{DynamicResource MaterialDesignPaper}"
+                      Visibility="{Binding IsLoading}"
+                      ZIndex="1000">
+                    <materialDesign:Card HorizontalAlignment="Center"
+                                         VerticalAlignment="Center"
+                                         Padding="10"
+                                         UniformCornerRadius="100">
+                        <ProgressBar Width="100"
+                                     Height="100"
+                                     IsIndeterminate="True"
+                                     Style="{StaticResource MaterialDesignCircularProgressBar}"
+                                     Value="20" />
+                    </materialDesign:Card>
+                </Grid>
+                <Button Grid.Row="0"
+                        Width="150"
+                        HorizontalAlignment="Left"
+                        Command="{Binding Upload}"
+                        Content="Upload" />
+                <DataGrid Grid.Row="1"
+                          AutoGenerateColumns="False"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          IsReadOnly="True"
+                          ItemsSource="{Binding Packages}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Width="1*"
+                                            Binding="{Binding Name}"
+                                            Header="Name" />
+                        <DataGridTemplateColumn Header="Delete">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Height="20"
+                                            Command="{Binding ElementName=manage,
+                                                              Path=DataContext.Delete}"
+                                            CommandParameter="{Binding}"
+                                            Padding="0"
+                                            Style="{StaticResource MaterialDesignFlatButton}">
+                                        <materialDesign:PackIcon Width="20"
+                                                                 Height="20"
+                                                                 Kind="Delete" />
+                                    </Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </TabItem>
+    </dragablz:TabablzControl>
 </Window>

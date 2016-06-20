@@ -25,7 +25,7 @@
                 <StackPanel Margin="20">
                     <TextBlock TextWrapping="WrapWithOverflow">1. Click on the button in the upper right corner saying &quot;Questions&quot;.</TextBlock>
                     <Separator Margin="0,20,0,20" />
-                    <TextBlock TextWrapping="WrapWithOverflow">2. Drag and drop a .qz package file in the &quot;Questions&quot; section.</TextBlock>
+                    <TextBlock TextWrapping="WrapWithOverflow">2. Pick a quiz from the list and press it's download button.</TextBlock>
                     <Separator Margin="0,20,0,20" />
                     <TextBlock TextWrapping="WrapWithOverflow">3. Drag and drop one or more .mp3 files in the &quot;Music Player&quot; section.</TextBlock>
                     <Separator Margin="0,20,0,20" />

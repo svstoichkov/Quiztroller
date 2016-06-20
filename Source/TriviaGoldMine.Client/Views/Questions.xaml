@@ -3,87 +3,141 @@
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
                      x:Name="questions"
-                     AllowDrop="True"
-                     Drop="Questions_OnDrop"
-                     DragOver="Questions_OnDragOver"
                      VerticalAlignment="Stretch"
                      VerticalContentAlignment="Stretch"
-                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=QuestionsViewModel}">
+                     AllowDrop="True"
+                     DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                           Path=QuestionsViewModel}"
+                     DragOver="Questions_OnDragOver"
+                     Drop="Questions_OnDrop">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <materialDesign:ColorZone Mode="Accent"
-                                  Padding="8"
-                                  Grid.Row="0">
-            <TextBlock Text="Questions"
-                       TextWrapping="WrapWithOverflow"
-                       HorizontalAlignment="Center" />
+        <materialDesign:ColorZone Grid.Row="0"
+                                  Mode="Accent"
+                                  Padding="8">
+            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                <TextBlock HorizontalAlignment="Center"
+                           Text="Questions"
+                           TextWrapping="WrapWithOverflow" />
+                <Button Margin="20,0,0,0"
+                        Command="{Binding Reload}"
+                        Style="{StaticResource MaterialDesignFlatButton}">
+                    <materialDesign:PackIcon Kind="Reload" Height="25" Width="25"/>
+                </Button>
+            </StackPanel>
         </materialDesign:ColorZone>
-        <Grid Margin="20"
-              Grid.Row="1">
+        <Grid Grid.Row="1"
+              Margin="10"
+              Background="{DynamicResource MaterialDesignPaper}"
+              Visibility="{Binding QuestionsLoadingVisibility}"
+              ZIndex="1000">
+            <materialDesign:Card HorizontalAlignment="Center"
+                                 VerticalAlignment="Center"
+                                 Padding="10"
+                                 UniformCornerRadius="100">
+                <ProgressBar Width="100"
+                             Height="100"
+                             IsIndeterminate="True"
+                             Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Value="20" />
+            </materialDesign:Card>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="10"
+              Background="{DynamicResource MaterialDesignPaper}"
+              Visibility="{Binding LoadQuestionsVisibility}"
+              ZIndex="500">
+            <DataGrid AutoGenerateColumns="False"
+                      CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      FontSize="18"
+                      FontWeight="Bold"
+                      IsReadOnly="True"
+                      ItemsSource="{Binding Packages}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="1*"
+                                        Binding="{Binding Name}"
+                                        Header="Name" />
+                    <DataGridTemplateColumn Header="Load">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Height="20"
+                                        Command="{Binding Source={StaticResource ViewModelLocator},
+                                                          Path=QuestionsViewModel.LoadPackage}"
+                                        CommandParameter="{Binding}"
+                                        Padding="0"
+                                        Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Width="20"
+                                                             Height="20"
+                                                             Kind="Download" />
+                                </Button>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+        <Grid Grid.Row="1" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <ScrollViewer VerticalScrollBarVisibility="Auto"
-                          Grid.Row="0">
+            <ScrollViewer Grid.Row="0" VerticalScrollBarVisibility="Auto">
                 <StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="№ "
-                                   FontWeight="Bold" />
-                        <TextBlock Text="{Binding CurrentQuestion.Number}"
-                                   Width="30" />
-                        <TextBlock Text="Points: "
-                                   Margin="20,0,0,0"
-                                   FontWeight="Bold" />
-                        <TextBlock Text="{Binding CurrentQuestion.Points}"
-                                   Width="30" />
-                        <TextBlock Text="Category: "
-                                   Margin="20,0,0,0"
-                                   FontWeight="Bold" />
+                        <TextBlock FontWeight="Bold" Text="№ " />
+                        <TextBlock Width="30" Text="{Binding CurrentQuestion.Number}" />
+                        <TextBlock Margin="20,0,0,0"
+                                   FontWeight="Bold"
+                                   Text="Points: " />
+                        <TextBlock Width="30" Text="{Binding CurrentQuestion.Points}" />
+                        <TextBlock Margin="20,0,0,0"
+                                   FontWeight="Bold"
+                                   Text="Category: " />
                         <TextBlock Text="{Binding CurrentQuestion.Category}" />
                     </StackPanel>
                     <StackPanel>
                         <Separator Margin="0,20,0,0" />
-                        <TextBlock Text="Question"
-                                   Margin="0,20,0,0"
-                                   FontWeight="Bold" />
-                        <TextBlock Text="{Binding CurrentQuestion.MainQuestion}"
-                                   Margin="0,10,0,0"
+                        <TextBlock Margin="0,20,0,0"
+                                   FontWeight="Bold"
+                                   Text="Question" />
+                        <TextBlock Margin="0,10,0,0"
+                                   Text="{Binding CurrentQuestion.MainQuestion}"
                                    TextWrapping="WrapWithOverflow" />
                         <Separator Margin="0,20,0,0" />
-                        <TextBlock Text="Alternate question"
-                                   Margin="0,20,0,0"
-                                   FontWeight="Bold" />
-                        <TextBlock Text="{Binding CurrentQuestion.AlternateQuestion}"
-                                   Margin="0,10,0,0"
+                        <TextBlock Margin="0,20,0,0"
+                                   FontWeight="Bold"
+                                   Text="Alternate question" />
+                        <TextBlock Margin="0,10,0,0"
+                                   Text="{Binding CurrentQuestion.AlternateQuestion}"
                                    TextWrapping="WrapWithOverflow" />
                         <Separator Margin="0,20,0,0" />
-                        <TextBlock Text="Answer"
-                                   Margin="0,20,0,0"
-                                   FontWeight="Bold" />
-                        <TextBlock Text="{Binding CurrentQuestion.Answer}"
-                                   Margin="0,10,0,0"
+                        <TextBlock Margin="0,20,0,0"
+                                   FontWeight="Bold"
+                                   Text="Answer" />
+                        <TextBlock Margin="0,10,0,0"
+                                   Text="{Binding CurrentQuestion.Answer}"
                                    TextWrapping="WrapWithOverflow" />
                     </StackPanel>
                 </StackPanel>
             </ScrollViewer>
             <StackPanel Grid.Row="1"
                         Margin="0,20,0,0"
-                        Orientation="Horizontal"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom">
-                <Button Style="{StaticResource MaterialDesignRaisedButton}"
+                        VerticalAlignment="Bottom"
+                        Orientation="Horizontal">
+                <Button Width="100"
+                        Margin="0,0,20,0"
                         Command="{Binding Previous}"
                         Content="Previous"
-                        Margin="0,0,20,0"
-                        Width="100" />
-                <Button Style="{StaticResource MaterialDesignRaisedAccentButton}"
+                        Style="{StaticResource MaterialDesignRaisedButton}" />
+                <Button Width="100"
                         Command="{Binding Next}"
                         Content="Next"
-                        Width="100" />
+                        Style="{StaticResource MaterialDesignRaisedAccentButton}" />
             </StackPanel>
         </Grid>
     </Grid>

@@ -1,16 +1,20 @@
 ﻿namespace Quiztroller.ViewModels
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Diagnostics;
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
-
-    using Autofac;
 
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
+
+    using Microsoft.Azure;
+    using Microsoft.WindowsAzure.Storage;
+    using Microsoft.WindowsAzure.Storage.Blob;
 
     using Newtonsoft.Json;
 
@@ -19,20 +23,37 @@
     public class QuestionsViewModel : ViewModelBase
     {
         private readonly PowerPointControllerViewModel controller;
+        private readonly CloudBlobContainer container;
+
         private Question currentQuestion;
         private int currentQuestionIndex;
+        private Visibility loadQuestionsVisibility = Visibility.Visible;
+        private Visibility questionsLoadingVisibility = Visibility.Collapsed;
 
-        public QuestionsViewModel()
+        public QuestionsViewModel(PowerPointControllerViewModel controller)
         {
+            this.controller = controller;
+
+            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=quiztroller;AccountKey=A4Vc95vJmUSiDGd72kFO2skM7pKZYTCy1FgFgfjwLvX0yiFcjkDUa4I2KtfMnSnWJBFslpYbtMiItt+aJ4Wqlw==");
+            var blobClient = storageAccount.CreateCloudBlobClient();
+            this.container = blobClient.GetContainerReference("quizbuilder");
+            this.container.CreateIfNotExists();
+
+            this.GetPackages();
+
             this.Next = new RelayCommand(this.HandleNext, this.CanNext);
             this.Previous = new RelayCommand(this.HandlePrevious, this.CanPrevious);
-
-            this.controller = ViewModelLocator.Container.Resolve<PowerPointControllerViewModel>();
+            this.LoadPackage = new RelayCommand<CloudBlockBlob>(this.HandleLoadPackage);
+            this.Reload = new RelayCommand(() => this.LoadQuestionsVisibility = Visibility.Visible, ()=> this.LoadQuestionsVisibility != Visibility.Visible);
         }
 
-        public ICommand Next { get; set; }
+        public ICommand Next { get; }
 
-        public ICommand Previous { get; set; }
+        public ICommand Previous { get; }
+
+        public ICommand LoadPackage { get; }
+
+        public ICommand Reload { get; }
 
         public List<Question> Questions { get; set; } = new List<Question>();
 
@@ -45,6 +66,45 @@
             set
             {
                 this.Set(() => this.CurrentQuestion, ref this.currentQuestion, value);
+            }
+        }
+
+        public Visibility LoadQuestionsVisibility
+        {
+            get
+            {
+                return this.loadQuestionsVisibility;
+            }
+            set
+            {
+                this.Set(() => this.LoadQuestionsVisibility, ref this.loadQuestionsVisibility, value);
+            }
+        }
+
+        public Visibility QuestionsLoadingVisibility
+        {
+            get
+            {
+                return this.questionsLoadingVisibility;
+            }
+            set
+            {
+                this.Set(() => this.QuestionsLoadingVisibility, ref this.questionsLoadingVisibility, value);
+            }
+        }
+
+        public ObservableCollection<CloudBlockBlob> Packages { get; } = new ObservableCollection<CloudBlockBlob>();
+
+        private void GetPackages()
+        {
+            this.Packages.Clear();
+            var blobs = this.container.ListBlobs();
+            foreach (var blob in blobs)
+            {
+                if (blob.GetType() == typeof(CloudBlockBlob))
+                {
+                    this.Packages.Add((CloudBlockBlob)blob);
+                }
             }
         }
 
@@ -73,6 +133,20 @@
             var questionsTxt = File.ReadAllText(Path.Combine(tempFolder, "questions.txt"));
             this.Questions = JsonConvert.DeserializeObject<List<Question>>(questionsTxt);
             this.CurrentQuestion = this.Questions.First();
+
+            this.LoadQuestionsVisibility = Visibility.Collapsed;
+        }
+
+        private async void HandleLoadPackage(CloudBlockBlob blob)
+        {
+            using (var fileStream = File.OpenWrite("quiz"))
+            {
+                this.QuestionsLoadingVisibility = Visibility.Visible;
+                await blob.DownloadToStreamAsync(fileStream);
+                this.QuestionsLoadingVisibility = Visibility.Collapsed;
+            }
+
+            this.OpenQuizPackage("quiz");
         }
 
         private bool CanPrevious()
@@ -84,8 +158,6 @@
         {
             this.currentQuestionIndex--;
             this.CurrentQuestion = Questions[this.currentQuestionIndex];
-
-            //this.controller.PreviousSlide();
         }
 
         private void HandleNext()
