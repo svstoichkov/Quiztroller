@@ -7,6 +7,7 @@
     using System.IO;
     using System.IO.Compression;
     using System.Linq;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Input;
 
@@ -108,14 +109,26 @@
             }
         }
 
-        public void OpenQuizPackage(string path)
+        public async void OpenQuizPackage(string path)
         {
+            var process = Process.GetProcessesByName("POWERPNT").FirstOrDefault();
+            process?.Kill();
+
             var tempFolder = Path.Combine(Path.GetTempPath(), "Quiztroller");
             if (Directory.Exists(tempFolder))
             {
                 foreach (var file in Directory.GetFiles(tempFolder))
                 {
-                    File.Delete(file);
+                    while (true)
+                    {
+                        try
+                        {
+                            File.Delete(file);
+                            await Task.Delay(1000);
+                            break;
+                        }
+                        catch { }
+                    }
                 }
             }
             else
