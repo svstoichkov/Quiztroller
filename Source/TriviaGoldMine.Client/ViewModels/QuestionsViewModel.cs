@@ -1,5 +1,6 @@
 ﻿namespace Quiztroller.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Diagnostics;
@@ -34,8 +35,7 @@
         {
             this.controller = controller;
 
-            var storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=quiztroller;AccountKey=A4Vc95vJmUSiDGd72kFO2skM7pKZYTCy1FgFgfjwLvX0yiFcjkDUa4I2KtfMnSnWJBFslpYbtMiItt+aJ4Wqlw==");
-            var blobClient = storageAccount.CreateCloudBlobClient();
+            var blobClient = new CloudBlobClient(new Uri(@"https://quiztroller.blob.core.windows.net/"));
             this.container = blobClient.GetContainerReference("quizbuilder");
             this.container.CreateIfNotExists();
 
