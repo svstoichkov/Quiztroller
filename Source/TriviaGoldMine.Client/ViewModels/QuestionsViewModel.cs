@@ -24,7 +24,6 @@
 
     public class QuestionsViewModel : ViewModelBase
     {
-        private readonly PowerPointControllerViewModel controller;
         private readonly CloudBlobContainer container;
 
         private Question currentQuestion;
@@ -32,10 +31,8 @@
         private Visibility loadQuestionsVisibility = Visibility.Visible;
         private Visibility questionsLoadingVisibility = Visibility.Collapsed;
 
-        public QuestionsViewModel(PowerPointControllerViewModel controller)
+        public QuestionsViewModel()
         {
-            this.controller = controller;
-
             var blobClient = new CloudBlobClient(new Uri(@"https://quiztroller.blob.core.windows.net/"));
             this.container = blobClient.GetContainerReference("quizbuilder");
             this.container.CreateIfNotExists();
@@ -177,8 +174,6 @@
         {
             this.currentQuestionIndex++;
             this.CurrentQuestion = Questions[this.currentQuestionIndex];
-
-            this.controller.NextSlide();
         }
 
         private bool CanNext()
