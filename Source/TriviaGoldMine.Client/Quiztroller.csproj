@@ -28,7 +28,7 @@
     <InstallUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quiztroller/</InstallUrl>
     <UpdateUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quiztroller/</UpdateUrl>
     <PublisherName>Svetlozar Stoichkov</PublisherName>
-    <ApplicationRevision>14</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>

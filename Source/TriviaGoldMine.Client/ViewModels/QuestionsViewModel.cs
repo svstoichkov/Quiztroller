@@ -149,6 +149,7 @@
 
         private async void HandleLoadPackage(CloudBlockBlob blob)
         {
+            File.Delete("quiz");
             using (var fileStream = File.OpenWrite("quiz"))
             {
                 this.QuestionsLoadingVisibility = Visibility.Visible;
