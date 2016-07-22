@@ -34,6 +34,8 @@
             </Style>
             <viewModels:ViewModelLocator x:Key="ViewModelLocator" />
             <converters:PathToFileNameConverter x:Key="PathToFileNameConverter" />
+            <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

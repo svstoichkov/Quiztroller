@@ -2,13 +2,18 @@
 {
     using System;
     using System.Collections.ObjectModel;
+    using System.IO;
+    using System.IO.Compression;
     using System.Linq;
+    using System.Windows;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Threading;
 
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.CommandWpf;
+
+    using Microsoft.WindowsAzure.Storage.Blob;
 
     public class Mp3PlayerViewModel : ViewModelBase
     {
@@ -21,6 +26,9 @@
         private bool isPlaying;
         private string length = "0:00";
         private bool popUpEnabled;
+        private CloudBlockBlob playlistBlob;
+        private Visibility downloadingVisibility = Visibility.Collapsed;
+        private Visibility downloadButtonVisibility;
 
         public Mp3PlayerViewModel()
         {
@@ -28,12 +36,44 @@
             this.Pause = new RelayCommand(this.HandlePause, this.CanPause);
             this.Previous = new RelayCommand(this.HandlePrevious, this.HasMp3);
             this.Next = new RelayCommand(this.HandleNext, this.HasMp3);
+            this.Download = new RelayCommand(this.HandleDownload, () => this.PlaylistBlob != null);
 
             this.timer.Interval = TimeSpan.FromSeconds(1);
             this.timer.Tick += this.OnTimer;
 
             this.mediaPlayer.MediaOpened += this.OnMediaOpened;
         }
+
+        private async void HandleDownload()
+        {
+            this.DownloadingVisibility = Visibility.Visible;
+            this.DownloadButtonVisibility = Visibility.Collapsed;
+            var tempFolder = Path.Combine(Path.GetTempPath(), "QuiztrollerMusic");
+            Directory.CreateDirectory(tempFolder);
+            foreach (var file in Directory.GetFiles(tempFolder))
+            {
+                File.Delete(file);
+            }
+
+            var tempFilePath = Path.Combine(tempFolder, this.playlistBlob.Name);
+            using (var fileStream = File.OpenWrite(tempFilePath))
+            {
+                await this.PlaylistBlob.DownloadToStreamAsync(fileStream);
+                this.PlaylistBlob = null;
+            }
+
+            using (var archive = ZipFile.Open(tempFilePath, ZipArchiveMode.Read))
+            {
+                archive.ExtractToDirectory(tempFolder);
+            }
+
+            File.Delete(tempFilePath);
+            this.AddSongs(Directory.GetFiles(tempFolder));
+            this.DownloadingVisibility = Visibility.Collapsed;
+            this.DownloadButtonVisibility = Visibility.Visible;
+        }
+
+        public ICommand Download { get; set; }
 
         public ICommand Play { get; set; }
 
@@ -44,6 +84,42 @@
         public ICommand Next { get; set; }
 
         public ObservableCollection<string> Songs { get; set; } = new ObservableCollection<string>();
+
+        public CloudBlockBlob PlaylistBlob
+        {
+            get
+            {
+                return this.playlistBlob;
+            }
+            set
+            {
+                this.Set(() => this.PlaylistBlob, ref this.playlistBlob, value);
+            }
+        }
+
+        public Visibility DownloadingVisibility
+        {
+            get
+            {
+                return this.downloadingVisibility;
+            }
+            set
+            {
+                this.Set(() => this.DownloadingVisibility, ref this.downloadingVisibility, value);
+            }
+        }
+
+        public Visibility DownloadButtonVisibility
+        {
+            get
+            {
+                return this.downloadButtonVisibility;
+            }
+            set
+            {
+                this.Set(() => this.DownloadButtonVisibility, ref this.downloadButtonVisibility, value);
+            }
+        }
 
         public string Elapsed
         {
@@ -121,7 +197,7 @@
 
         private void HandleNext()
         {
-            if (this.currentSongIndex == this.Songs.Count - 1)
+            if (this.currentSongIndex >= this.Songs.Count - 1)
             {
                 this.currentSongIndex = 0;
             }

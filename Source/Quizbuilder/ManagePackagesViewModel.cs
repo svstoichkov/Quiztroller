@@ -3,6 +3,7 @@
     using System;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Input;
 
@@ -13,6 +14,8 @@
     using Microsoft.Win32;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Blob;
+
+    using Quiztroller.Models;
 
     public class ManagePackagesViewModel : ViewModelBase
     {
@@ -29,14 +32,12 @@
             this.GetPackages();
 
             this.Upload = new RelayCommand(this.HandleUpload);
-            this.Delete = new RelayCommand<CloudBlockBlob>(this.HandleDelete);
+            this.Delete = new RelayCommand<Quiz>(this.HandleDelete);
         }
 
         public ICommand Upload { get; }
 
         public ICommand Delete { get; }
-
-        public ObservableCollection<CloudBlockBlob> Packages { get; } = new ObservableCollection<CloudBlockBlob>();
 
         public Visibility IsLoading
         {
@@ -50,47 +51,71 @@
             }
         }
 
+        public ObservableCollection<Quiz> Packages { get; } = new ObservableCollection<Quiz>();
+
         private void GetPackages()
         {
             this.Packages.Clear();
-            var blobs = this.container.ListBlobs();
-            foreach (var blob in blobs)
+            var blobs = this.container.ListBlobs().Cast<CloudBlockBlob>().ToList();
+            foreach (var blob in blobs.Where(x => !x.Name.EndsWith("qzmz")))
             {
-                if (blob.GetType() == typeof (CloudBlockBlob))
-                {
-                    this.Packages.Add((CloudBlockBlob)blob);
-                }
+                var quiz = new Quiz();
+                quiz.MainBlob = blob;
+                quiz.PlaylistBlob = blobs.FirstOrDefault(x => x.Name == quiz.MainBlob.Name + ".qzmz");
+                this.Packages.Add(quiz);
             }
         }
 
-        private void HandleDelete(CloudBlockBlob blob)
+        private void HandleDelete(Quiz quiz)
         {
-            blob.Delete();
-            this.Packages.Remove(blob);
+            quiz.MainBlob.Delete();
+            quiz.PlaylistBlob.Delete();
+            this.Packages.Remove(quiz);
         }
 
         private async void HandleUpload()
         {
             var dialog = new OpenFileDialog();
-            dialog.Multiselect = false;
+            dialog.Multiselect = true;
             dialog.CheckFileExists = true;
             dialog.AddExtension = true;
             dialog.CheckPathExists = true;
-            dialog.Filter = "Quiz package|*.qz";
+            dialog.Filter = "Quiz package|*.qz;*.qzmz";
             dialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 
             var showDialog = dialog.ShowDialog();
             if (showDialog != null && showDialog.Value)
             {
-                var filename = Path.GetFileNameWithoutExtension(dialog.FileName);
-                var blob = this.container.GetBlockBlobReference(filename);
-                using (var fileStream = File.OpenRead(dialog.FileName))
+                this.IsLoading = Visibility.Visible;
+
+                if (dialog.FileNames.Length == 1 && !dialog.FileName.EndsWith("qz"))
                 {
-                    this.IsLoading = Visibility.Visible;
-                    await blob.UploadFromStreamAsync(fileStream);
-                    this.IsLoading = Visibility.Collapsed;
-                    this.GetPackages();
+                    var filename = Path.GetFileNameWithoutExtension(dialog.FileName);
+                    var blob = this.container.GetBlockBlobReference(filename);
+                    using (var fileStream = File.OpenRead(dialog.FileName))
+                    {
+                        await blob.UploadFromStreamAsync(fileStream);
+                    }
                 }
+                else if (dialog.FileNames.Length == 2 && dialog.FileNames.Any(x => x.EndsWith("qz")) && dialog.FileNames.Any(x => x.EndsWith("qzmz")))
+                {
+                    var quiz = Path.GetFileNameWithoutExtension(dialog.FileNames.First(x => x.EndsWith("qz")));
+                    var blob1 = this.container.GetBlockBlobReference(quiz);
+                    using (var fileStream = File.OpenRead(dialog.FileNames.First(x => x.EndsWith("qz"))))
+                    {
+                        await blob1.UploadFromStreamAsync(fileStream);
+                    }
+
+                    var playlist = Path.GetFileName(dialog.FileNames.First(x => x.EndsWith("qzmz")));
+                    var blob2 = this.container.GetBlockBlobReference(playlist);
+                    using (var fileStream = File.OpenRead(dialog.FileNames.First(x => x.EndsWith("qzmz"))))
+                    {
+                        await blob2.UploadFromStreamAsync(fileStream);
+                    }
+                }
+                
+                this.IsLoading = Visibility.Collapsed;
+                this.GetPackages();
             }
         }
     }

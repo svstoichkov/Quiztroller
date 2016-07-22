@@ -28,7 +28,7 @@
     <InstallUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quizbuilder/</InstallUrl>
     <UpdateUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quizbuilder/</UpdateUrl>
     <PublisherName>Svetlozar Stoichkov</PublisherName>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -155,6 +155,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="NullToVisibilityConverter.cs" />
+    <Compile Include="Quiz.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

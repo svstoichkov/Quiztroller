@@ -25,7 +25,9 @@
                 <Button Margin="20,0,0,0"
                         Command="{Binding Reload}"
                         Style="{StaticResource MaterialDesignFlatButton}">
-                    <materialDesign:PackIcon Kind="Reload" Height="25" Width="25"/>
+                    <materialDesign:PackIcon Width="25"
+                                             Height="25"
+                                             Kind="Reload" />
                 </Button>
             </StackPanel>
         </materialDesign:ColorZone>
@@ -59,8 +61,20 @@
                       ItemsSource="{Binding Packages}">
                 <DataGrid.Columns>
                     <DataGridTextColumn Width="1*"
-                                        Binding="{Binding Name}"
+                                        Binding="{Binding MainBlob.Name}"
                                         Header="Name" />
+                    <DataGridTemplateColumn Width="1*" Header="Playlist">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <materialDesign:PackIcon Width="26"
+                                                         Height="26"
+                                                         Foreground="Green"
+                                                         Kind="CheckAll"
+                                                         Visibility="{Binding PlaylistBlob,
+                                                                              Converter={StaticResource NullToVisibilityConverter}}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                     <DataGridTemplateColumn Header="Load">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

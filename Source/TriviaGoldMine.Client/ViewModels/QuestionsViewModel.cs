@@ -18,12 +18,15 @@
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Blob;
 
+    using Models;
+
     using Newtonsoft.Json;
 
     using TriviaGoldMine.Helpers.Models;
 
     public class QuestionsViewModel : ViewModelBase
     {
+        private readonly Mp3PlayerViewModel mp3Player;
         private readonly CloudBlobContainer container;
 
         private Question currentQuestion;
@@ -31,8 +34,9 @@
         private Visibility loadQuestionsVisibility = Visibility.Visible;
         private Visibility questionsLoadingVisibility = Visibility.Collapsed;
 
-        public QuestionsViewModel()
+        public QuestionsViewModel(Mp3PlayerViewModel mp3Player)
         {
+            this.mp3Player = mp3Player;
             var blobClient = new CloudBlobClient(new Uri(@"https://quiztroller.blob.core.windows.net/"));
             this.container = blobClient.GetContainerReference("quizbuilder");
             this.container.CreateIfNotExists();
@@ -41,8 +45,8 @@
 
             this.Next = new RelayCommand(this.HandleNext, this.CanNext);
             this.Previous = new RelayCommand(this.HandlePrevious, this.CanPrevious);
-            this.LoadPackage = new RelayCommand<CloudBlockBlob>(this.HandleLoadPackage);
-            this.Reload = new RelayCommand(() => this.LoadQuestionsVisibility = Visibility.Visible, ()=> this.LoadQuestionsVisibility != Visibility.Visible);
+            this.LoadPackage = new RelayCommand<Quiz>(this.HandleLoadPackage);
+            this.Reload = new RelayCommand(() => this.LoadQuestionsVisibility = Visibility.Visible, () => this.LoadQuestionsVisibility != Visibility.Visible);
         }
 
         public ICommand Next { get; }
@@ -91,18 +95,18 @@
             }
         }
 
-        public ObservableCollection<CloudBlockBlob> Packages { get; } = new ObservableCollection<CloudBlockBlob>();
+        public ObservableCollection<Quiz> Packages { get; } = new ObservableCollection<Quiz>();
 
         private void GetPackages()
         {
             this.Packages.Clear();
-            var blobs = this.container.ListBlobs();
-            foreach (var blob in blobs)
+            var blobs = this.container.ListBlobs().Cast<CloudBlockBlob>().ToList();
+            foreach (var blob in blobs.Where(x => !x.Name.EndsWith("qzmz")))
             {
-                if (blob.GetType() == typeof(CloudBlockBlob))
-                {
-                    this.Packages.Add((CloudBlockBlob)blob);
-                }
+                var quiz = new Quiz();
+                quiz.MainBlob = blob;
+                quiz.PlaylistBlob = blobs.FirstOrDefault(x => x.Name == quiz.MainBlob.Name + ".qzmz");
+                this.Packages.Add(quiz);
             }
         }
 
@@ -147,17 +151,19 @@
             this.LoadQuestionsVisibility = Visibility.Collapsed;
         }
 
-        private async void HandleLoadPackage(CloudBlockBlob blob)
+        private async void HandleLoadPackage(Quiz quiz)
         {
+            this.QuestionsLoadingVisibility = Visibility.Visible;
             File.Delete("quiz");
+
+            this.mp3Player.PlaylistBlob = quiz.PlaylistBlob;
             using (var fileStream = File.OpenWrite("quiz"))
             {
-                this.QuestionsLoadingVisibility = Visibility.Visible;
-                await blob.DownloadToStreamAsync(fileStream);
-                this.QuestionsLoadingVisibility = Visibility.Collapsed;
+                await quiz.MainBlob.DownloadToStreamAsync(fileStream);
             }
 
             this.OpenQuizPackage("quiz");
+            this.QuestionsLoadingVisibility = Visibility.Collapsed;
         }
 
         private bool CanPrevious()

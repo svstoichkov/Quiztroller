@@ -2,31 +2,29 @@
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-                     xmlns:viewModels="clr-namespace:Quiztroller.ViewModels"
                      x:Name="mp3Player"
                      AllowDrop="True"
-                     Drop="Mp3Player_OnDrop"
+                     DataContext="{Binding Source={StaticResource ViewModelLocator},
+                                           Path=Mp3PlayerViewModel}"
                      DragOver="Mp3Player_OnDragOver"
-                     DataContext="{Binding Source={StaticResource ViewModelLocator}, Path=Mp3PlayerViewModel}">
+                     Drop="Mp3Player_OnDrop">
     <StackPanel Orientation="Vertical">
-        <materialDesign:ColorZone Mode="Accent"
-                                  Padding="8">
+        <materialDesign:ColorZone Mode="Accent" Padding="8">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding CurrentSong, Converter={StaticResource PathToFileNameConverter}}"
+                <TextBlock Grid.Column="0"
                            HorizontalAlignment="Center"
-                           Grid.Column="0" />
-                <StackPanel Orientation="Horizontal"
+                           Text="{Binding CurrentSong,
+                                          Converter={StaticResource PathToFileNameConverter}}" />
+                <StackPanel Grid.Column="1"
                             Margin="20,0,0,0"
-                            Grid.Column="1">
-                    <TextBlock Text="{Binding Elapsed}" Foreground="White" />
-                    <TextBlock Text=" / "
-                               Foreground="White" />
-                    <TextBlock Text="{Binding Length}"
-                               Foreground="White" />
+                            Orientation="Horizontal">
+                    <TextBlock Foreground="White" Text="{Binding Elapsed}" />
+                    <TextBlock Foreground="White" Text=" / " />
+                    <TextBlock Foreground="White" Text="{Binding Length}" />
                 </StackPanel>
             </Grid>
         </materialDesign:ColorZone>
@@ -37,55 +35,77 @@
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
-            <materialDesign:PopupBox Grid.Column="0"
+            <materialDesign:Card Grid.Column="0"
+                                 HorizontalAlignment="Center"
+                                 Padding="5"
+                                 ToolTip="Downloading playlist"
+                                 UniformCornerRadius="30"
+                                 Visibility="{Binding DownloadingVisibility}">
+                <ProgressBar Width="20"
+                             Height="20"
+                             IsIndeterminate="True"
+                             Style="{StaticResource MaterialDesignCircularProgressBar}"
+                             Value="20" />
+            </materialDesign:Card>
+            <Button Grid.Column="0"
+                    Command="{Binding Download}"
+                    Padding="0"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Visibility="{Binding DownloadButtonVisibility}">
+                <materialDesign:PackIcon Width="24"
+                                         Height="24"
+                                         Kind="Download" />
+            </Button>
+            <materialDesign:PopupBox Grid.Column="1"
                                      HorizontalAlignment="Center"
                                      IsEnabled="{Binding PopUpEnabled}">
                 <materialDesign:PopupBox.ToggleContent>
-                    <materialDesign:PackIcon Kind="PlaylistPlay"
-                                             Width="30"
-                                             Height="30" />
+                    <materialDesign:PackIcon Width="30"
+                                             Height="30"
+                                             Kind="PlaylistPlay" />
                 </materialDesign:PopupBox.ToggleContent>
-                <DataGrid ItemsSource="{Binding Songs}"
+                <DataGrid AutoGenerateColumns="False"
                           HeadersVisibility="None"
-                          SelectedItem="{Binding CurrentSong}"
-                          AutoGenerateColumns="False">
+                          ItemsSource="{Binding Songs}"
+                          SelectedItem="{Binding CurrentSong}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Binding="{Binding ., Converter={StaticResource PathToFileNameConverter}}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </materialDesign:PopupBox>
-            <Button Style="{StaticResource MaterialDesignFlatButton}"
+            <Button Grid.Column="2"
                     Command="{Binding Previous}"
                     Padding="0"
-                    Grid.Column="1">
-                <materialDesign:PackIcon Kind="SkipPrevious"
-                                         Width="24"
-                                         Height="24" />
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                <materialDesign:PackIcon Width="24"
+                                         Height="24"
+                                         Kind="SkipPrevious" />
             </Button>
-            <Button Style="{StaticResource MaterialDesignFlatButton}"
+            <Button Grid.Column="3"
                     Command="{Binding Play}"
                     Padding="0"
-                    Grid.Column="2">
-                <materialDesign:PackIcon Kind="Play"
-                                         Width="24"
-                                         Height="24" />
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                <materialDesign:PackIcon Width="24"
+                                         Height="24"
+                                         Kind="Play" />
             </Button>
-            <Button Style="{StaticResource MaterialDesignFlatButton}"
+            <Button Grid.Column="4"
                     Command="{Binding Pause}"
                     Padding="0"
-                    Grid.Column="3">
-                <materialDesign:PackIcon Kind="Pause"
-                                         Width="24"
-                                         Height="24" />
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                <materialDesign:PackIcon Width="24"
+                                         Height="24"
+                                         Kind="Pause" />
             </Button>
-            <Button Style="{StaticResource MaterialDesignFlatButton}"
+            <Button Grid.Column="5"
                     Command="{Binding Next}"
                     Padding="0"
-                    Grid.Column="4">
-                <materialDesign:PackIcon Kind="SkipNext"
-                                         Width="24"
-                                         Height="24" />
+                    Style="{StaticResource MaterialDesignFlatButton}">
+                <materialDesign:PackIcon Width="24"
+                                         Height="24"
+                                         Kind="SkipNext" />
             </Button>
         </Grid>
     </StackPanel>
