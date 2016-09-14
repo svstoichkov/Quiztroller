@@ -31,7 +31,15 @@
 
             using (var archive = ZipFile.Open(newFile, ZipArchiveMode.Update))
             {
-                ReplaceMedia(round1Images, round2Images, archive);
+                if (round1Images.Any() && round2Images.Any())
+                {
+                    try
+                    {
+                        ReplaceMedia(round1Images, round2Images, archive);
+                    }
+                    catch { }
+                }
+
                 ReplaceQuestions(spreadsheet, archive, tempFolder);
             }
 

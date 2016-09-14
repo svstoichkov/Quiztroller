@@ -106,9 +106,9 @@
         private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(this.PowerpointPath)
-                   && !string.IsNullOrWhiteSpace(this.ExcelPath)
-                   && this.SpeedRound1ImagesPaths.Count == 10
-                   && this.SpeedRound2ImagesPaths.Count == 10;
+                   && !string.IsNullOrWhiteSpace(this.ExcelPath);
+                   // && this.SpeedRound1ImagesPaths.Count == 10
+                   // && this.SpeedRound2ImagesPaths.Count == 10;
         }
 
         private void HandleSave()
@@ -123,7 +123,6 @@
                 var dialog = new SaveFileDialog();
                 dialog.Filter = "Quiz|*.qz";
                 dialog.Title = "Select a location to save the quiz file";
-                dialog.OverwritePrompt = true;
                 dialog.CheckPathExists = true;
                 dialog.AddExtension = true;
                 dialog.DefaultExt = "qz";
@@ -142,7 +141,7 @@
                         File.Delete(file);
                     }
 
-                    if (this.selectedSongs.Any())
+                    if (this.selectedSongs != null && this.selectedSongs.Any())
                     {
                         foreach (var song in this.selectedSongs)
                         {
