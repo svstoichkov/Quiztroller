@@ -69,7 +69,7 @@
         private void HandleDelete(Quiz quiz)
         {
             quiz.MainBlob.Delete();
-            quiz.PlaylistBlob.Delete();
+            quiz.PlaylistBlob?.Delete();
             this.Packages.Remove(quiz);
         }
 

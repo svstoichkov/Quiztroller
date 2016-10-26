@@ -28,8 +28,8 @@
     <InstallUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quizbuilder/</InstallUrl>
     <UpdateUrl>https://s3.eu-central-1.amazonaws.com/clickoncedeployments/Quizbuilder/</UpdateUrl>
     <PublisherName>Svetlozar Stoichkov</PublisherName>
-    <MinimumRequiredVersion>1.0.0.4</MinimumRequiredVersion>
-    <ApplicationRevision>5</ApplicationRevision>
+    <MinimumRequiredVersion>1.0.0.5</MinimumRequiredVersion>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
