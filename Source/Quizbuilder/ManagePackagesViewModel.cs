@@ -88,7 +88,7 @@
             {
                 this.IsLoading = Visibility.Visible;
 
-                if (dialog.FileNames.Length == 1 && !dialog.FileName.EndsWith("qz"))
+                if (dialog.FileNames.Length == 1 && dialog.FileName.EndsWith("qz"))
                 {
                     var filename = Path.GetFileNameWithoutExtension(dialog.FileName);
                     var blob = this.container.GetBlockBlobReference(filename);
